@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KrishanaPredi — Advanced Prediction Terminal</title>
+  <meta name="description" content="KrishanaPredi - High precision algorithmic gaming predictions, neural pattern analysis, and real-time market signals.">
+  <meta name="theme-color" content="#040706">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/png" href="/images/loki_hero.png">
+  <link rel="apple-touch-icon" href="/images/loki_hero.png">
+  <link rel="image_src" href="/images/loki_hero.png">
+  <!-- Social Share & Search Preview Logo (Green Loki Artwork) -->
+  <meta property="og:title" content="KrishanaPredi — Advanced Prediction Terminal">
+  <meta property="og:description" content="Next-Generation Neural Prediction Platform with High Precision Signal Matrices.">
+  <meta property="og:image" content="/images/loki_hero.png">
+  <meta property="og:image:secure_url" content="/images/loki_hero.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="600">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="/images/loki_hero.png">
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="top-header">
+    <div class="brand-badge" id="brandHomeBtn">
+      <img src="/images/loki_hero.png" alt="KrishanaPredi Logo" class="brand-icon">
+      <span class="brand-name">KRISHANAPREDI</span>
+    </div>
+    <div class="header-actions">
+      <!-- Telegram Support Button -->
+      <a href="https://t.me/easybasepoint" target="_blank" rel="noopener noreferrer" class="telegram-btn" title="Updates and Support">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+        </svg>
+        Follow Telegram
+      </a>
+      <div class="user-status-pill is-guest" id="userPill" role="button" tabindex="0" title="Click to Login / Sign Up">
+        <span class="user-avatar-dot is-guest-dot"></span>
+        <span class="pill-username">Login / Sign Up</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- App Main Container -->
+  <main class="app-container">
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ======================================================== -->
+    <!-- 1. AUTH VIEW: LOGIN / REGISTER / GUEST -->
+    <!-- ======================================================== -->
+    <section class="view-section active" id="authView">
+      <div class="hero-artwork-card">
+        <div class="loki-hero-container">
+          <img src="/images/loki_hero.png" alt="KrishanaPredi Loki Emerald Artwork" class="loki-hero-img">
+        </div>
+        <h1 class="hero-title">KRISHANAPREDI</h1>
+        <p class="hero-subtitle">Next-Generation Neural Prediction Platform with High Precision Signal Matrices</p>
+      </div>
+
+      <div class="glass-panel">
+        <div class="auth-tabs">
+          <button class="auth-tab-btn active" id="tabLoginBtn" type="button">LOGIN</button>
+          <button class="auth-tab-btn" id="tabRegisterBtn" type="button">SIGN UP</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm">
+          <div class="form-group">
+            <label class="form-label" for="loginUsername">Username / ID</label>
+            <input type="text" id="loginUsername" class="form-input" placeholder="Enter username" required autocomplete="username">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn-primary" style="margin-bottom: 14px;">
+            <span>ACCESS PLATFORM</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="registerForm" style="display: none;">
+          <div class="form-group">
+            <label class="form-label" for="regUsername">Choose Username</label>
+            <input type="text" id="regUsername" class="form-input" placeholder="Create username" required autocomplete="username">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regEmail">Email (Optional)</label>
+            <input type="email" id="regEmail" class="form-input" placeholder="name@domain.com" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regPassword">Password</label>
+            <input type="password" id="regPassword" class="form-input" placeholder="Create secure password" required autocomplete="new-password">
+          </div>
+          <button type="submit" class="btn-primary" style="margin-bottom: 14px;">
+            <span>CREATE ACCOUNT</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Quick Paste Key Link -->
+      <div class="quick-key-banner" id="quickPasteBanner">
+        <div class="quick-key-text">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+          <span>Already have a key?</span>
+        </div>
+        <span class="quick-key-badge">PASTE KEY</span>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 2. PLANS / BUY KEY VIEW -->
+    <!-- ======================================================== -->
+    <section class="view-section" id="plansView">
+      
+      <!-- COMPACT SLEEK HOW IT WORKS BAR -->
+      <div class="how-it-works-compact">
+        <div class="hiw-title-row">
+          <div class="hiw-heading">
+            <span class="hiw-icon">⚡</span>
+            <span>HOW IT WORKS — 4 EASY STEPS</span>
+          </div>
+          <span class="hiw-badge">INSTANT AI SIGNALS</span>
+        </div>
+        <div class="hiw-stepper-row">
+          <div class="hiw-step-pill">
+            <span class="hiw-step-n">1</span>
+            <span class="hiw-step-txt">Choose Plan</span>
+          </div>
+          <span class="hiw-arrow">›</span>
+          <div class="hiw-step-pill">
+            <span class="hiw-step-n">2</span>
+            <span class="hiw-step-txt">Upload UTR</span>
+          </div>
+          <span class="hiw-arrow">›</span>
+          <div class="hiw-step-pill">
+            <span class="hiw-step-n">3</span>
+            <span class="hiw-step-txt">Activate Key</span>
+          </div>
+          <span class="hiw-arrow">›</span>
+          <div class="hiw-step-pill">
+            <span class="hiw-step-n">4</span>
+            <span class="hiw-step-txt">Live Signals</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 16px;">
+        <h2 style="font-family: var(--font-display); font-size: 1.35rem; color: #fff;">AVAILABLE PROTOCOLS</h2>
+        <p style="font-size: 0.82rem; color: var(--text-secondary);">Select your prediction duration and daily signal quota</p>
+      </div>
+
+      <!-- Have a Key Banner -->
+      <div class="quick-key-banner" id="haveKeyBanner">
+        <div class="quick-key-text">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+          <span>Have a Key? Activate Key</span>
+        </div>
+        <span class="quick-key-badge">PASTE KEY</span>
+      </div>
+
+      <!-- Plans Container (Populated via JS with exact 4 plans) -->
+      <div class="plans-grid" id="plansGrid">
+        <!-- Exact Plan Cards loaded dynamically -->
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 3. PAYMENT VIEW (UPI QR & SCREENSHOT VERIFICATION) -->
+    <!-- ======================================================== -->
+    <section class="view-section" id="paymentView">
+      <div class="glass-panel payment-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <button type="button" class="btn-subtle" id="backToPlansBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Change Plan
+          </button>
+          <span class="user-status-pill" id="checkoutUserTag">GUEST</span>
+        </div>
+
+        <h2 style="font-family: var(--font-display); font-size: 1.35rem; color: #ffffff; margin-bottom: 4px;">SECURE UPI CHECKOUT</h2>
+        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px;">
+          Purchasing: <strong id="checkoutPlanName" style="color: var(--neon-accent);">Plan</strong>
+        </div>
+
+        <!-- Price Display -->
+        <div style="background: rgba(0, 255, 102, 0.05); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 12px; margin-bottom: 16px;">
+          <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px;">Payable Amount</div>
+          <div id="checkoutAmountDisplay" style="font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; color: var(--neon-green);">₹589</div>
+        </div>
+
+        <!-- Single Pure Dynamic UPI QR Container -->
+        <div class="qr-container">
+          <img id="qrDisplayImg" src="" alt="Payment UPI QR" class="qr-img">
+        </div>
+
+        <!-- UPI ID Box with One-Click Copy -->
+        <div class="upi-id-box">
+          <span class="upi-text" id="upiIdText">antaryami12@upi</span>
+          <button type="button" class="btn-copy-small" id="copyUpiBtn">COPY UPI ID</button>
+        </div>
+
+        <!-- Direct UPI Intent Buttons (PhonePe, Google Pay, Paytm, Default UPI) -->
+        <div style="margin-bottom: 8px;">
+          <div style="font-size: 0.78rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.8px; margin-bottom: 8px;">
+            Tap to Pay Directly with App
+          </div>
+          <div class="payment-apps-grid">
+            <a id="payPhonePeBtn" href="#" class="btn-app-pay btn-phonepe">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-5h2v5zm0-7h-2V7h2v2.5z"/></svg>
+              <span>PhonePe</span>
+            </a>
+            <a id="payGPayBtn" href="#" class="btn-app-pay btn-gpay">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 13.5h-7v-2h7v2zm0-4h-7v-2h7v2z"/></svg>
+              <span>Google Pay</span>
+            </a>
+            <a id="payPaytmBtn" href="#" class="btn-app-pay btn-paytm">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4 11h-3v3h-2v-3H8v-2h3V8h2v3h3v2z"/></svg>
+              <span>Paytm</span>
+            </a>
+            <a id="openUpiAppBtn" href="#" class="btn-app-pay btn-upi">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              <span>Any UPI App</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Payment Screenshot Upload Section -->
+        <div style="border-top: 1px solid var(--border-glass); padding-top: 18px; text-align: left;">
+          <h3 style="font-size: 0.95rem; font-weight: 700; color: #ffffff; margin-bottom: 6px;">Payment Verification</h3>
+          <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 12px;">
+            After completing payment in your UPI app, upload your payment screenshot and reference (UTR) for server-side verification.
+          </p>
+
+          <form id="paymentSubmitForm">
+            <div class="form-group">
+              <label class="form-label" for="paymentUtr">12-Digit Payment UTR / Transaction Reference (Digits Only)</label>
+              <input type="tel" id="paymentUtr" class="form-input" placeholder="Enter 12-digit UTR number (e.g. 428190284729)" maxlength="12" minlength="12" pattern="[0-9]{12}" inputmode="numeric" autocomplete="off" required>
+              <div style="font-size: 0.72rem; color: var(--neon-accent); margin-top: 4px;">* Enter the exact 12-digit numeric reference from your payment confirmation.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Payment Screenshot (Mandatory)</label>
+              <div class="upload-dropzone" id="dropzoneBox">
+                <input type="file" id="screenshotFile" accept="image/*" style="display: none;" required>
+                <div id="dropzoneText">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="2" style="margin-bottom: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  <div style="font-weight: 700; font-size: 0.88rem; color: #fff;">Upload Payment Screenshot</div>
+                  <div style="font-size: 0.74rem; color: var(--text-muted);">Tap or drag screenshot here</div>
+                </div>
+                <img id="screenshotPreview" class="screenshot-preview" alt="Screenshot Preview">
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary" id="submitPaymentBtn">
+              <span>SUBMIT FOR VERIFICATION</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 4. SUBMISSION STATUS & KEY DISPLAY VIEW -->
+    <!-- ======================================================== -->
+    <section class="view-section" id="statusView">
+      <div class="glass-panel" style="text-align: center;">
+        <div id="statusPendingState">
+          <div style="width: 70px; height: 70px; margin: 0 auto 16px; border-radius: 50%; border: 3px solid rgba(0, 255, 102, 0.2); border-top-color: var(--neon-green); animation: spin 1s linear infinite;"></div>
+          <h2 style="font-family: var(--font-display); font-size: 1.3rem; color: #fff; margin-bottom: 8px;">PAYMENT SUBMITTED</h2>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+            Your payment is submitted for server-side verification by the LordGrow administrator.
+          </p>
+
+          <div style="background: rgba(0, 0, 0, 0.4); border-radius: var(--radius-md); padding: 14px; text-align: left; margin-bottom: 16px; font-size: 0.85rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="color: var(--text-muted);">Request ID:</span>
+              <strong id="statusReqId" style="font-family: monospace; color: var(--neon-accent);">REQ_...</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="color: var(--text-muted);">Plan:</span>
+              <strong id="statusPlanName" style="color: #fff;">Starter</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="color: var(--text-muted);">Amount:</span>
+              <strong id="statusAmount" style="color: var(--neon-green);">₹589</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Status:</span>
+              <span class="user-status-pill" style="background: rgba(250, 204, 21, 0.15); color: #facc15; border-color: #facc15;">PENDING VERIFICATION</span>
+            </div>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--text-muted);">
+            Auto-checking verification status every 5 seconds...
+          </div>
+        </div>
+
+        <!-- Approved State with Generated Key -->
+        <div id="statusApprovedState" style="display: none;">
+          <div style="width: 60px; height: 60px; margin: 0 auto 12px; border-radius: 50%; background: rgba(0, 255, 102, 0.15); display: flex; align-items: center; justify-content: center; border: 2px solid var(--neon-green);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2 style="font-family: var(--font-display); font-size: 1.4rem; color: #fff; margin-bottom: 6px;">PAYMENT VERIFIED!</h2>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 14px;">
+            The LordGrow owner has verified your payment and generated your unique key.
+          </p>
+
+          <div class="key-display-box">
+            <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px;">Your Unique License Key</span>
+            <span class="key-code" id="displayApprovedKey">KRISHANAPREDIXXXXXXXXXXXX</span>
+            <button type="button" class="btn-primary" id="copyApprovedKeyBtn" style="padding: 10px 18px; font-size: 0.84rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              COPY KEY
+            </button>
+          </div>
+
+          <button type="button" class="btn-secondary" id="proceedToActivateKeyBtn">
+            <span>PROCEED TO ACTIVATE KEY</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 5. PASTE KEY VIEW -->
+    <!-- ======================================================== -->
+    <section class="view-section" id="pasteKeyView">
+      <div class="glass-panel">
+        <h2 style="font-family: var(--font-display); font-size: 1.35rem; color: #fff; margin-bottom: 8px; text-align: center;">ENTER YOUR KEY</h2>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px; text-align: center;">
+          Paste your 25-character approved license key to activate your plan.
+        </p>
+
+        <form id="keyActivationForm">
+          <div class="form-group">
+            <label class="form-label" for="inputLicenseKey">License Key</label>
+            <div class="input-with-button">
+              <input type="text" id="inputLicenseKey" class="form-input" placeholder="KRISHANAPREDI..." required style="font-family: monospace; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">
+              <button type="button" class="btn-secondary" id="pasteFromClipboardBtn" style="width: auto; padding: 0 14px; font-size: 0.8rem;">
+                PASTE
+              </button>
+            </div>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">
+              Format: KRISHANAPREDI + 12 alphanumeric characters
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" id="activateKeySubmitBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>ACTIVATE KEY</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 6. GAME LINK VIEW (STRICTLY HIDDEN UNTIL KEY ACTIVATION) -->
+    <!-- ======================================================== -->
+    <section class="view-section" id="gameLinkView">
+      <div class="glass-panel">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+          <span class="user-status-pill" style="background: rgba(0,255,102,0.15); color: var(--neon-green);">KEY ACTIVATED</span>
+          <span id="activeKeyPlanBadge" style="font-size: 0.75rem; color: var(--text-secondary);">Plan Active</span>
+        </div>
+
+        <h2 style="font-family: var(--font-display); font-size: 1.35rem; color: #fff; margin-bottom: 6px;">SELECT YOUR GAME</h2>
+        <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 18px;">
+          Synchronize your prediction engine with your target gaming server link.
+        </p>
+
+        <form id="gameLinkSubmitForm">
+          <div class="form-group">
+            <label class="form-label" for="selectGame">Select Game</label>
+            <select id="selectGame" class="game-select-dropdown" required>
+              <option value="Aviator">Aviator (Flight Multiplier Matrix)</option>
+              <option value="Mines">Mines (Safe Tile Grid Heatmap)</option>
+              <option value="Dragon vs Tiger">Dragon vs Tiger (Streak Probability)</option>
+              <option value="Wingo">Wingo (Quantum Color & Number)</option>
+              <option value="Crash">Crash (High-Altitude Vector)</option>
+              <option value="Roulette">Roulette (European Zero Risk Node)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="inputGameLink">Game Link</label>
+            <input type="url" id="inputGameLink" class="form-input" placeholder="https://yourgame.example.com/play" required>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">
+              Paste the active URL where you play the selected game.
+            </div>
+          </div>
+
+          <!-- Preview Card -->
+          <div class="game-preview-card" id="gameLinkPreviewCard" style="display: none;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6z"/></svg>
+            <div style="overflow: hidden;">
+              <div id="previewGameTitle" style="font-weight: 700; color: #fff; font-size: 0.88rem;">Aviator</div>
+              <div id="previewGameUrl" style="font-size: 0.74rem; color: var(--text-muted); text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">https://...</div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" style="margin-top: 16px;">
+            <span>CONTINUE TO DASHBOARD</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 7. PREDICTION DASHBOARD -->
+    <!-- ======================================================== -->
+    <section class="view-section" id="dashboardView">
+      <!-- Active Plan Summary Header -->
+      <div class="glass-panel" style="padding: 16px; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+          <div>
+            <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted);">Active License</div>
+            <div id="dashPlanName" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; color: #fff;">Loki Supreme</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted);">Remaining</div>
+            <div id="dashRemainingDays" style="font-size: 0.95rem; font-weight: 800; color: var(--neon-accent);">25 Days</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: var(--radius-sm);">
+          <div>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Selected Game:</span>
+            <div id="dashSelectedGame" style="font-weight: 700; color: var(--neon-green); font-size: 0.85rem;">Aviator</div>
+          </div>
+          <div>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Today's Quota:</span>
+            <div id="dashPredictionQuota" style="font-weight: 700; color: #fff; font-size: 0.85rem;">0 / 50 Signals</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Prediction Radar Terminal -->
+      <div class="prediction-terminal">
+        <div class="pred-radar-header">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="radar-dot"></span>
+            <span style="font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: #fff;">LIVE SIGNAL ENGINE</span>
+          </div>
+          <span style="font-size: 0.72rem; font-family: monospace; color: var(--neon-accent);" id="radarSeedHash">SEED: 0x9F41</span>
+        </div>
+
+        <div class="pred-hero-metric">
+          <div class="pred-val-big" id="predMainMetric">READY</div>
+          <div class="pred-type-label" id="predTypeLabel">Press generate to fetch live prediction</div>
+        </div>
+
+        <div class="pred-detail-matrix" id="predMatrixDetails" style="display: none;">
+          <div class="matrix-box">
+            <div class="title">Safe Exit Target</div>
+            <div class="val" id="predSafeTarget">--</div>
+          </div>
+          <div class="matrix-box">
+            <div class="title">Platform Prediction Accuracy</div>
+            <div class="val" id="predConfidence">--</div>
+          </div>
+        </div>
+
+        <div id="predRecommendationNotice" style="font-size: 0.76rem; color: var(--text-secondary); background: rgba(0,0,0,0.4); border-left: 2px solid var(--neon-green); padding: 8px 12px; border-radius: 4px; margin-bottom: 16px; display: none;">
+          --
+        </div>
+
+        <button type="button" class="btn-primary" id="generatePredBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <span>GENERATE NEXT PREDICTION</span>
+        </button>
+      </div>
+
+      <!-- Key & Game Info Card -->
+      <div class="glass-panel" style="padding: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <span style="font-size: 0.8rem; font-weight: 700; color: #fff;">Active Key:</span>
+          <button type="button" class="btn-copy-small" id="dashCopyKeyBtn">COPY KEY</button>
+        </div>
+        <div id="dashActiveKeyText" style="font-family: monospace; font-size: 0.85rem; color: var(--neon-accent); word-break: break-all; margin-bottom: 12px;">KRISHANAPREDI...</div>
+
+        <div style="border-top: 1px solid var(--border-glass); padding-top: 10px;">
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Active Game Link:</span>
+          <div id="dashGameLinkPreview" style="font-size: 0.8rem; color: var(--text-secondary); text-overflow: ellipsis; white-space: nowrap; overflow: hidden; margin-top: 2px;">--</div>
+        </div>
+      </div>
+
+      <!-- Prediction History -->
+      <div class="glass-panel" style="padding: 16px;">
+        <h3 style="font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 12px;">Recent Prediction Logs</h3>
+        <div class="history-list" id="predictionHistoryList">
+          <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 12px;">No signals generated yet.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 8. WALLET SECTION -->
+    <!-- ======================================================== -->
+    <section class="view-section" id="walletView">
+      <div class="glass-panel">
+        <h2 style="font-family: var(--font-display); font-size: 1.35rem; color: #fff; margin-bottom: 8px;">WALLET & FUNDS</h2>
+        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 20px;">
+          Manage your balance, purchases, and withdrawal requests.
+        </p>
+
+        <!-- Balance Card -->
+        <div style="background: rgba(0, 255, 102, 0.05); border: 1.5px solid var(--border-active); border-radius: var(--radius-md); padding: 18px; margin-bottom: 20px; text-align: center; box-shadow: 0 0 20px rgba(0, 255, 102, 0.1);">
+          <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px;">Available Wallet Balance</div>
+          <div id="walletBalanceDisplay" style="font-family: var(--font-display); font-size: 2.4rem; font-weight: 900; color: var(--neon-accent); margin: 4px 0;">₹0.00</div>
+          <div style="font-size: 0.78rem; color: var(--neon-green); font-weight: 700;">● Daily 2% Guaranteed Return Active on Balance</div>
+        </div>
+
+        <!-- Wallet Actions Tabs: Deposit First, Then Withdrawal -->
+        <div class="auth-tabs" style="margin-bottom: 20px;">
+          <button type="button" class="auth-tab-btn active" id="tabDepositBtn" onclick="window.switchWalletTab && window.switchWalletTab('deposit')">DEPOSIT MONEY (ADD FUNDS)</button>
+          <button type="button" class="auth-tab-btn" id="tabWithdrawBtn" onclick="window.switchWalletTab && window.switchWalletTab('withdraw')">WITHDRAWAL</button>
+        </div>
+
+        <!-- 1. DEPOSIT SECTION -->
+        <div id="walletDepositSection">
+          
+          <!-- Daily 2% Return Highlight Banner -->
+          <div class="wallet-return-banner" style="margin-bottom: 16px;">
+            <div class="return-badge">DAILY 2% RETURN GUARANTEE</div>
+            <h3 class="return-heading">Earn Guaranteed 2% Daily Return on Added Funds!</h3>
+            <p class="return-subtext">Daily earnings are credited directly to your active wallet balance every 24 hours.</p>
+          </div>
+
+          <div style="background: rgba(0,0,0,0.35); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
+            
+            <!-- STEP 1: SELECT AMOUNT -->
+            <div class="flow-step-header">
+              <span class="flow-step-badge">STEP 1</span>
+              <span class="flow-step-title">Select Amount to Add (Min. ₹300)</span>
+            </div>
+
+            <!-- 4 Big Interactive Amount Cards -->
+            <div class="amount-cards-grid">
+              <div class="amount-select-card active" data-amt="300" onclick="window.selectDepositAmount && window.selectDepositAmount(300)">
+                <div class="card-amt">₹300</div>
+                <div class="card-return">+₹6 / Day</div>
+                <div class="card-check">✓</div>
+              </div>
+              <div class="amount-select-card" data-amt="550" onclick="window.selectDepositAmount && window.selectDepositAmount(550)">
+                <div class="card-amt">₹550</div>
+                <div class="card-return">+₹11 / Day</div>
+                <div class="card-check">✓</div>
+              </div>
+              <div class="amount-select-card" data-amt="990" onclick="window.selectDepositAmount && window.selectDepositAmount(990)">
+                <div class="card-amt">₹990</div>
+                <div class="card-return">+₹19.8 / Day</div>
+                <div class="card-check">✓</div>
+              </div>
+              <div class="amount-select-card" data-amt="1450" onclick="window.selectDepositAmount && window.selectDepositAmount(1450)">
+                <div class="card-badge">POPULAR</div>
+                <div class="card-amt">₹1,450</div>
+                <div class="card-return">+₹29 / Day</div>
+                <div class="card-check">✓</div>
+              </div>
+            </div>
+
+            <!-- Custom Amount Input -->
+            <div class="custom-amt-box">
+              <label class="form-label" for="depositAmount" style="font-size: 0.8rem; margin-bottom: 6px;">Or Enter Custom Amount (Min. ₹300)</label>
+              <div style="position: relative;">
+                <span class="currency-symbol">₹</span>
+                <input type="number" id="depositAmount" class="form-input custom-amt-input" value="300" min="300" placeholder="Min. ₹300" required>
+              </div>
+              <div class="live-return-preview">
+                Daily Return: <strong id="dailyReturnAmount">+₹6.00 / day</strong> (2% on ₹300)
+              </div>
+            </div>
+
+            <!-- STEP 2: PAY VIA UPI APPS OR QR -->
+            <div class="flow-step-header" style="margin-top: 20px;">
+              <span class="flow-step-badge">STEP 2</span>
+              <span class="flow-step-title">Pay via UPI Apps (Pre-filled Amount) or Scan QR</span>
+            </div>
+
+            <!-- Direct 1-Tap App Opener Buttons -->
+            <div class="payment-apps-grid" style="margin-bottom: 12px;">
+              <a id="walletPayPhonePeBtn" href="#" class="btn-app-pay btn-phonepe">
+                <span>PhonePe</span>
+                <span class="btn-app-amt" id="phonepeAmtTag">₹300</span>
+              </a>
+              <a id="walletPayGPayBtn" href="#" class="btn-app-pay btn-gpay">
+                <span>Google Pay</span>
+                <span class="btn-app-amt" id="gpayAmtTag">₹300</span>
+              </a>
+              <a id="walletPayPaytmBtn" href="#" class="btn-app-pay btn-paytm">
+                <span>Paytm</span>
+                <span class="btn-app-amt" id="paytmAmtTag">₹300</span>
+              </a>
+              <a id="walletOpenUpiAppBtn" href="#" class="btn-app-pay btn-upi">
+                <span>Any UPI</span>
+                <span class="btn-app-amt" id="upiAmtTag">₹300</span>
+              </a>
+            </div>
+
+            <!-- Dynamic QR Code for Wallet Deposit (Instant Scan Support) -->
+            <div class="wallet-qr-wrapper" style="text-align: center; margin: 14px 0; padding: 12px; background: rgba(0, 0, 0, 0.45); border-radius: var(--radius-md); border: 1px dashed rgba(0, 255, 102, 0.35);">
+              <div style="font-size: 0.8rem; color: #ffffff; font-weight: 700; margin-bottom: 8px;">
+                Scan QR Code to Pay Pre-filled <span id="walletQrAmtDisplay" style="color: var(--neon-green); font-weight: 900;">₹300</span>
+              </div>
+              <div style="display: inline-block; padding: 10px; background: #ffffff; border-radius: 12px; border: 2px solid var(--neon-green); box-shadow: 0 0 16px rgba(0, 255, 102, 0.25);">
+                <img id="walletQrImg" src="" alt="Deposit QR Code" style="width: 170px; height: 170px; display: block; object-fit: contain;">
+              </div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 8px;">
+                Tap buttons above to open payment apps, or scan the QR code from any phone.
+              </div>
+            </div>
+
+            <div class="upi-id-box" style="margin-bottom: 20px;">
+              <span class="upi-text">antaryami12@upi</span>
+              <button type="button" class="btn-copy-small" id="copyWalletUpiBtn">COPY UPI ID</button>
+            </div>
+
+            <!-- STEP 3: CONFIRM 12-DIGIT REAL UTR -->
+            <div class="flow-step-header">
+              <span class="flow-step-badge">STEP 3</span>
+              <span class="flow-step-title">Enter 12-Digit Payment UTR Number (Digits Only)</span>
+            </div>
+
+            <form id="walletDepositForm">
+              <div class="form-group">
+                <input type="tel" id="depositUtr" class="form-input" placeholder="Enter 12-digit UTR (e.g. 428190284729)" maxlength="12" minlength="12" pattern="[0-9]{12}" inputmode="numeric" autocomplete="off" required style="font-size: 1rem; letter-spacing: 1px; font-weight: 700;">
+                <div style="font-size: 0.72rem; color: var(--neon-accent); margin-top: 4px;">* Only valid 12-digit numeric reference numbers are accepted. Alphabets not allowed.</div>
+              </div>
+              <button type="submit" class="btn-primary" id="depositSubmitBtn" style="padding: 15px; font-size: 0.92rem;">
+                <span id="depositBtnText">CONFIRM DEPOSIT OF ₹300 (+2% DAILY)</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- 2. WITHDRAWAL SECTION -->
+        <div id="walletWithdrawSection" style="display: none;">
+          <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;">
+            <h3 style="font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 6px;">Withdraw to Bank / UPI</h3>
+            <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 14px;">Instant withdrawal transfer to your submitted UPI account.</p>
+            <form id="walletWithdrawForm">
+              <div class="form-group">
+                <label class="form-label" for="withdrawAmount">Withdrawal Amount (₹)</label>
+                <input type="number" id="withdrawAmount" class="form-input" placeholder="Enter amount" min="100" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="withdrawUpi">Your Receiver UPI ID</label>
+                <input type="text" id="withdrawUpi" class="form-input" placeholder="e.g. yourname@upi" required>
+              </div>
+              <button type="submit" class="btn-secondary" style="width: 100%; padding: 14px;">
+                <span>SUBMIT WITHDRAWAL REQUEST</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Wallet Transactions History -->
+        <div style="margin-top: 20px;">
+          <h4 style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 10px;">Recent Wallet Transactions</h4>
+          <div class="history-list" id="walletTxList">
+            <div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 12px;">No transactions recorded yet.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar for Mobile & Desktop -->
+  <nav class="bottom-nav" id="bottomNav" style="display: none;">
+    <button type="button" class="nav-tab-btn active" id="navPlansBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Plans</span>
+    </button>
+    <button type="button" class="nav-tab-btn" id="navKeyBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+      <span>Paste Key</span>
+    </button>
+    <button type="button" class="nav-tab-btn" id="navGameBtn" style="display: none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6z"/></svg>
+      <span>Game Link</span>
+    </button>
+    <button type="button" class="nav-tab-btn" id="navDashBtn" style="display: none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      <span>Dashboard</span>
+    </button>
+    <button type="button" class="nav-tab-btn" id="navWalletBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/></svg>
+      <span>Wallet</span>
+    </button>
+  </nav>
+
+  <!-- Keyframe Spin -->
+  <style>
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+  </style>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

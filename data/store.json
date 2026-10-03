@@ -1,0 +1,133 @@
+{
+  "users": [
+    {
+      "id": "user_1791038060277",
+      "username": "speedtest_user",
+      "email": "",
+      "passwordHash": "$2b$08$Xv9WDcvZLHglRpO5gf0tsuDyhSCSxo7XPvhPiSeFR7W1Adtc5YoLq",
+      "createdAt": "2026-10-03T14:34:20.277Z",
+      "isGuest": false,
+      "walletBalance": 300
+    },
+    {
+      "id": "test",
+      "username": "test",
+      "isGuest": true,
+      "createdAt": "2026-10-03T14:40:48.698Z",
+      "walletBalance": 500
+    },
+    {
+      "id": "user_1791040961901",
+      "username": "rahul_test",
+      "email": "",
+      "passwordHash": "$2b$08$jX7MdDdkObLXv9GJRIvzh.VOZvTV08IVTS3hZPLrQmP4Q7P6bylVi",
+      "createdAt": "2026-10-03T15:22:41.901Z",
+      "isGuest": false,
+      "walletBalance": 0
+    },
+    {
+      "id": "user_1791041055704",
+      "username": "SunilVerma",
+      "email": "",
+      "passwordHash": "$2b$08$AJKs9zutuqv1Ff2arOYBt.mR.DhXV2MhdMb7J10SqarHS8r72pRza",
+      "createdAt": "2026-10-03T15:24:15.704Z",
+      "isGuest": false,
+      "walletBalance": 0
+    },
+    {
+      "id": "user_1791041569078",
+      "username": "lord",
+      "email": "",
+      "passwordHash": "$2b$08$T2HC3LTASN7OQAw4aa/l1enuJzG79P2PfFUisvSYtAHz.P7Wt6acq",
+      "createdAt": "2026-10-03T15:32:49.078Z",
+      "isGuest": false,
+      "walletBalance": 0
+    }
+  ],
+  "paymentRequests": [
+    {
+      "id": "REQ_1791038708220_KR5W",
+      "userId": "GUEST_RAW0F0R",
+      "planId": "plan_589",
+      "planName": "PLAN 1 — STARTER",
+      "amount": 589,
+      "durationDays": 3,
+      "dailyPredictions": 9,
+      "utr": "123456789098",
+      "screenshotUrl": "/uploads/screenshot-1791038708209-552640548.png",
+      "status": "APPROVED",
+      "generatedKey": "KRISHANAPREDI66XRWIDKVBZD",
+      "createdAt": "2026-10-03T14:45:08.220Z",
+      "updatedAt": "2026-10-03T14:57:10.292Z",
+      "rejectReason": null
+    },
+    {
+      "id": "REQ_1791038089096_XANR",
+      "userId": "GUEST_RAW0F0R",
+      "planId": "plan_2091",
+      "planName": "PLAN 3 — ULTRA MATRIX",
+      "amount": 2091,
+      "durationDays": 15,
+      "dailyPredictions": 32,
+      "utr": "234567890-098765432345678",
+      "screenshotUrl": "/uploads/screenshot-1791038089079-789647466.png",
+      "status": "PENDING",
+      "generatedKey": null,
+      "createdAt": "2026-10-03T14:34:49.096Z",
+      "updatedAt": "2026-10-03T14:34:49.096Z",
+      "rejectReason": null
+    }
+  ],
+  "keys": [
+    {
+      "key": "KRISHANAPREDI66XRWIDKVBZD",
+      "requestId": "REQ_1791038708220_KR5W",
+      "userId": "GUEST_RAW0F0R",
+      "planId": "plan_589",
+      "planName": "PLAN 1 — STARTER",
+      "amount": 589,
+      "durationDays": 3,
+      "dailyPredictions": 9,
+      "isRedeemed": true,
+      "createdAt": "2026-10-03T14:57:10.292Z",
+      "expiresAt": "2026-10-06T14:57:26.018Z",
+      "redeemedBy": "GUEST_RAW0F0R",
+      "redeemedAt": "2026-10-03T14:57:26.018Z"
+    }
+  ],
+  "gameLinks": [],
+  "predictionLogs": [],
+  "walletTransactions": [
+    {
+      "id": "TX_DEP_1791039011513",
+      "userId": "user_1791038060277",
+      "type": "DEPOSIT",
+      "amount": 300,
+      "dailyReturnRate": "2.0%",
+      "utr": "987654321012",
+      "status": "COMPLETED",
+      "createdAt": "2026-10-03T14:50:11.513Z"
+    },
+    {
+      "id": "TX_DEP_1791038448698",
+      "userId": "test",
+      "type": "DEPOSIT",
+      "amount": 500,
+      "dailyReturnRate": "2.0%",
+      "utr": "428190284729",
+      "status": "COMPLETED",
+      "createdAt": "2026-10-03T14:40:48.698Z"
+    },
+    {
+      "id": "TX_PAY_1791039430293",
+      "userId": "GUEST_RAW0F0R",
+      "type": "PLAN_PURCHASE",
+      "amount": 589,
+      "planName": "PLAN 1 — STARTER",
+      "key": "KRISHANAPREDI66XRWIDKVBZD",
+      "status": "COMPLETED",
+      "createdAt": "2026-10-03T14:57:10.293Z"
+    }
+  ],
+  "adminPasswordHash": "$2b$10$gc45b2XoySkqf1cOXWcGCOA6dnHa3fxLZBvBYs0gb1qWhpxVZgQwi"
+}

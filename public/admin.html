@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LordGrow — Master Admin Command</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#060907">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="icon" type="image/png" href="/images/loki_hero.png">
+</head>
+<body>
+
+  <!-- Admin Navigation -->
+  <header class="admin-navbar">
+    <div class="admin-brand">
+      <img src="/images/loki_hero.png" alt="Loki Logo" style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover; object-position: top center; border: 1.5px solid #00ff66; filter: drop-shadow(0 0 6px #00ff66);">
+      <h1 class="admin-title">LORD<span>GROW</span></h1>
+      <span class="admin-badge">OWNER VAULT</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <span id="adminSessionTag" style="font-size: 0.8rem; color: var(--admin-green); font-weight: 700;">AUTHENTICATING...</span>
+      <button type="button" id="adminLogoutBtn" class="btn-reject" style="padding: 6px 12px; font-size: 0.75rem; display: none;">LOGOUT</button>
+    </div>
+  </header>
+
+  <!-- Login Modal / Gatekeeper -->
+  <div id="adminLoginGate" style="max-width: 420px; margin: 80px auto; padding: 24px; background: var(--admin-card); border: 1px solid var(--admin-green); border-radius: 16px; box-shadow: 0 0 35px rgba(0,255,102,0.15);">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <h2 style="font-family: 'Orbitron', monospace; font-size: 1.4rem; color: #fff;">LORDGROW ACCESS</h2>
+      <p style="font-size: 0.85rem; color: var(--text-dim);">Protected Owner Security Gateway</p>
+    </div>
+    <form id="adminLoginForm">
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-size: 0.78rem; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px;">Admin Username</label>
+        <input type="text" id="adminUsername" value="admin" style="width: 100%; padding: 12px; background: #000; border: 1px solid var(--admin-border); border-radius: 8px; color: #fff; outline: none;" required>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-size: 0.78rem; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px;">Owner Password</label>
+        <input type="password" id="adminPassword" placeholder="••••••••" style="width: 100%; padding: 12px; background: #000; border: 1px solid var(--admin-border); border-radius: 8px; color: #fff; outline: none;" required>
+      </div>
+      <button type="submit" class="btn-approve" style="width: 100%; padding: 14px;">
+        AUTHENTICATE & ENTER VAULT
+      </button>
+      <div id="loginErrorMsg" style="color: var(--admin-red); font-size: 0.8rem; margin-top: 10px; text-align: center; display: none;"></div>
+    </form>
+  </div>
+
+  <!-- Admin Main Dashboard Content (Hidden until authenticated) -->
+  <main class="admin-container" id="adminDashboardContent" style="display: none;">
+
+    <!-- Top Key Metrics -->
+    <div class="stats-grid">
+      <div class="stat-card alert">
+        <span class="stat-title">Pending Payment Requests</span>
+        <span class="stat-num" id="statPendingCount">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-title">Approved Verifications</span>
+        <span class="stat-num" id="statApprovedCount">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-title">Total Platform Volume</span>
+        <span class="stat-num" id="statTotalVolume">₹0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-title">Active Keys Generated</span>
+        <span class="stat-num" id="statKeysCount">0</span>
+      </div>
+    </div>
+
+    <!-- Navigation Subtabs -->
+    <div class="filter-bar">
+      <div class="filter-btn-group">
+        <button type="button" class="filter-btn active" data-tab="requests">PAYMENT REQUESTS</button>
+        <button type="button" class="filter-btn" data-tab="keys">KEYS REPOSITORY</button>
+        <button type="button" class="filter-btn" data-tab="gamelinks">GAME LINKS</button>
+      </div>
+      <button type="button" id="refreshAdminBtn" class="btn-approve" style="padding: 6px 14px; font-size: 0.78rem;">
+        REFRESH DATA
+      </button>
+    </div>
+
+    <!-- 1. Requests Sub-View -->
+    <div id="subviewRequests">
+      <!-- Status Filter -->
+      <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+        <button type="button" class="req-filter-btn active" data-status="all" style="background: rgba(255,255,255,0.08); border: 1px solid var(--admin-border); color: #fff; padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; cursor: pointer;">All</button>
+        <button type="button" class="req-filter-btn" data-status="pending" style="background: transparent; border: 1px solid var(--admin-border); color: var(--admin-yellow); padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; cursor: pointer;">Pending</button>
+        <button type="button" class="req-filter-btn" data-status="approved" style="background: transparent; border: 1px solid var(--admin-border); color: var(--admin-green); padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; cursor: pointer;">Approved</button>
+        <button type="button" class="req-filter-btn" data-status="rejected" style="background: transparent; border: 1px solid var(--admin-border); color: var(--admin-red); padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; cursor: pointer;">Rejected</button>
+      </div>
+
+      <!-- Requests List -->
+      <div class="requests-grid" id="requestsContainer">
+        <div style="text-align: center; color: var(--text-dim); padding: 40px;">Loading verification requests...</div>
+      </div>
+    </div>
+
+    <!-- 2. Keys Sub-View -->
+    <div id="subviewKeys" style="display: none;">
+      <div style="background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 14px; padding: 20px;">
+        <h3 style="font-family: 'Orbitron', monospace; font-size: 1.1rem; color: #fff; margin-bottom: 14px;">All Generated Keys</h3>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--admin-border); color: var(--text-dim);">
+                <th style="padding: 10px;">Generated Key</th>
+                <th style="padding: 10px;">Plan</th>
+                <th style="padding: 10px;">Amount</th>
+                <th style="padding: 10px;">User ID</th>
+                <th style="padding: 10px;">Redeemed?</th>
+                <th style="padding: 10px;">Created</th>
+              </tr>
+            </thead>
+            <tbody id="keysTableBody">
+              <!-- Keys rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Game Links Sub-View -->
+    <div id="subviewGameLinks" style="display: none;">
+      <div style="background: var(--admin-card); border: 1px solid var(--admin-border); border-radius: 14px; padding: 20px;">
+        <h3 style="font-family: 'Orbitron', monospace; font-size: 1.1rem; color: #fff; margin-bottom: 14px;">Registered Game Links</h3>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--admin-border); color: var(--text-dim);">
+                <th style="padding: 10px;">Key</th>
+                <th style="padding: 10px;">Selected Game</th>
+                <th style="padding: 10px;">Game URL</th>
+                <th style="padding: 10px;">Last Synced</th>
+              </tr>
+            </thead>
+            <tbody id="gameLinksTableBody">
+              <!-- Game links rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Screenshot Lightbox Modal -->
+  <div class="lightbox-modal" id="lightboxModal">
+    <div style="position: relative;">
+      <button type="button" id="closeLightboxBtn" style="position: absolute; top: -36px; right: 0; background: none; border: none; color: #fff; font-size: 1.8rem; cursor: pointer;">✕</button>
+      <img id="lightboxImg" src="" alt="Payment Screenshot Fullview" class="lightbox-img">
+    </div>
+  </div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

@@ -39,6 +39,7 @@ let db = {
   gameLinks: [],
   predictionLogs: [],
   walletTransactions: [],
+  walletDeposits: [],
   adminPasswordHash: ADMIN_PASSWORD_HASH
 };
 
@@ -61,6 +62,7 @@ function loadData() {
       if (!db.gameLinks) db.gameLinks = [];
       if (!db.predictionLogs) db.predictionLogs = [];
       if (!db.walletTransactions) db.walletTransactions = [];
+      if (!db.walletDeposits) db.walletDeposits = [];
     } else {
       saveData();
     }
@@ -683,14 +685,24 @@ app.get('/api/predictions/history', (req, res) => {
   res.json({ success: true, history });
 });
 
-// 12. Wallet API
+// 12. Wallet API: Available Balance, Pending Deposits & Transaction History
 app.get('/api/wallet', (req, res) => {
   const { userId } = req.query;
   const user = db.users.find(u => u.id === userId);
+
+  if (!db.walletDeposits) db.walletDeposits = [];
+  if (!db.walletTransactions) db.walletTransactions = [];
+
+  const availableBalance = user ? (user.walletBalance || 0) : 0;
+  const pendingDeposits = db.walletDeposits.filter(d => d.userId === userId && d.status === 'PENDING');
+  const pendingAmount = pendingDeposits.reduce((acc, d) => acc + (Number(d.amount) || 0), 0);
   const transactions = db.walletTransactions.filter(t => t.userId === userId);
+
   res.json({
     success: true,
-    balance: user ? user.walletBalance || 0 : 0,
+    balance: availableBalance,
+    availableBalance,
+    pendingAmount,
     transactions
   });
 });
@@ -701,7 +713,7 @@ app.post('/api/wallet/withdraw', (req, res) => {
   const user = db.users.find(u => u.id === userId);
 
   if (!user || user.walletBalance < withdrawAmount || withdrawAmount <= 0) {
-    return res.status(400).json({ success: false, message: 'Insufficient balance or invalid amount' });
+    return res.status(400).json({ success: false, message: 'Insufficient available balance or invalid amount' });
   }
 
   user.walletBalance -= withdrawAmount;
@@ -720,7 +732,7 @@ app.post('/api/wallet/withdraw', (req, res) => {
   res.json({ success: true, message: 'Withdrawal request submitted for processing', tx });
 });
 
-// 13. Wallet Deposit Request API
+// 13. Wallet Deposit Request API (Admin Approval Required)
 app.post('/api/wallet/deposit', (req, res) => {
   const { userId, amount, utr } = req.body;
   const depositAmount = Number(amount);
@@ -728,12 +740,24 @@ app.post('/api/wallet/deposit', (req, res) => {
     return res.status(400).json({ success: false, message: 'Minimum deposit amount is ₹300.' });
   }
 
-  // Strict 12-digit UTR validation
+  // Strict 12-digit numeric UTR validation
   const cleanUtr = (utr || '').trim();
   if (!/^\d{12}$/.test(cleanUtr)) {
     return res.status(400).json({
       success: false,
-      message: 'Invalid UTR! Please enter exact 12-digit numeric UTR from your payment app.'
+      message: 'Invalid UTR! Please enter exact 12-digit numeric reference number from your payment app.'
+    });
+  }
+
+  if (!db.walletDeposits) db.walletDeposits = [];
+  if (!db.walletTransactions) db.walletTransactions = [];
+
+  // Check if UTR is already in use (pending or approved)
+  const duplicateUtr = db.walletDeposits.find(d => d.utr === cleanUtr && d.status !== 'REJECTED');
+  if (duplicateUtr) {
+    return res.status(400).json({
+      success: false,
+      message: 'This 12-digit UTR has already been submitted. Please check your transaction history or contact support.'
     });
   }
 
@@ -749,28 +773,48 @@ app.post('/api/wallet/deposit', (req, res) => {
     db.users.push(user);
   }
 
+  const depositId = 'DEP_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6);
+  const now = new Date().toISOString();
+
+  // Create PENDING deposit request
+  const depositRequest = {
+    id: depositId,
+    userId: user.id,
+    username: user.username || user.id,
+    amount: depositAmount,
+    dailyReturnRate: '2.0%',
+    utr: cleanUtr,
+    status: 'PENDING',
+    createdAt: now,
+    updatedAt: null,
+    adminActionBy: null
+  };
+  db.walletDeposits.unshift(depositRequest);
+
+  // Record PENDING transaction in history
   const tx = {
     id: 'TX_DEP_' + Date.now(),
+    depositId,
     userId: user.id,
     type: 'DEPOSIT',
     amount: depositAmount,
     dailyReturnRate: '2.0%',
     utr: cleanUtr,
-    status: 'COMPLETED',
-    createdAt: new Date().toISOString()
+    status: 'PENDING',
+    createdAt: now
   };
-
-  // Add deposited funds to wallet balance
-  user.walletBalance = (user.walletBalance || 0) + depositAmount;
-
-  if (!db.walletTransactions) db.walletTransactions = [];
   db.walletTransactions.unshift(tx);
   saveData();
 
+  // DO NOT add funds to user.walletBalance immediately.
+  // Wallet balance will only be credited when Admin clicks APPROVE.
+
   res.json({
     success: true,
-    message: `₹${depositAmount.toLocaleString('en-IN')} deposited successfully! Your daily 2.0% returns are now active.`,
-    balance: user.walletBalance,
+    message: 'Payment submitted. Wallet balance will be updated after admin approval.',
+    deposit: depositRequest,
+    availableBalance: user.walletBalance || 0,
+    pendingAmount: depositAmount,
     tx
   });
 });
@@ -892,6 +936,127 @@ app.post('/api/admin/reject', verifyAdmin, (req, res) => {
   });
 });
 
+// Admin: Get All Wallet Deposit Requests
+app.get('/api/admin/deposits', verifyAdmin, (req, res) => {
+  if (!db.walletDeposits) db.walletDeposits = [];
+  const filter = (req.query.status || 'all').toLowerCase();
+  let list = db.walletDeposits;
+  if (filter && filter !== 'all') {
+    list = list.filter(d => (d.status || '').toLowerCase() === filter);
+  }
+  res.json({ success: true, deposits: list });
+});
+
+// Admin: Approve Wallet Deposit Request (Credit User Wallet Balance)
+app.post('/api/admin/deposits/approve', verifyAdmin, (req, res) => {
+  const { depositId } = req.body;
+  if (!db.walletDeposits) db.walletDeposits = [];
+  const deposit = db.walletDeposits.find(d => d.id === depositId);
+
+  if (!deposit) {
+    return res.status(404).json({ success: false, message: 'Deposit request not found.' });
+  }
+
+  // Prevent duplicate approval / processing
+  if (deposit.status === 'APPROVED') {
+    return res.status(400).json({
+      success: false,
+      message: 'This deposit has already been approved! Duplicate credit prevented.'
+    });
+  }
+  if (deposit.status === 'REJECTED') {
+    return res.status(400).json({
+      success: false,
+      message: 'This deposit has already been rejected and cannot be approved.'
+    });
+  }
+
+  const now = new Date().toISOString();
+  deposit.status = 'APPROVED';
+  deposit.updatedAt = now;
+  deposit.adminActionBy = req.admin ? req.admin.username : 'admin';
+
+  // Find user and credit confirmed wallet balance
+  let user = db.users.find(u => u.id === deposit.userId);
+  if (!user) {
+    user = {
+      id: deposit.userId,
+      username: deposit.username || deposit.userId,
+      walletBalance: 0,
+      createdAt: now
+    };
+    db.users.push(user);
+  }
+
+  user.walletBalance = (user.walletBalance || 0) + Number(deposit.amount);
+
+  // Update matching transaction in db.walletTransactions
+  if (db.walletTransactions) {
+    const tx = db.walletTransactions.find(t => t.depositId === deposit.id || (t.utr === deposit.utr && t.type === 'DEPOSIT'));
+    if (tx) {
+      tx.status = 'APPROVED';
+      tx.updatedAt = now;
+    }
+  }
+
+  saveData();
+
+  res.json({
+    success: true,
+    message: `Deposit of ₹${Number(deposit.amount).toLocaleString('en-IN')} approved successfully! Balance credited to ${user.username}.`,
+    deposit,
+    newBalance: user.walletBalance
+  });
+});
+
+// Admin: Reject Wallet Deposit Request
+app.post('/api/admin/deposits/reject', verifyAdmin, (req, res) => {
+  const { depositId, reason } = req.body;
+  if (!db.walletDeposits) db.walletDeposits = [];
+  const deposit = db.walletDeposits.find(d => d.id === depositId);
+
+  if (!deposit) {
+    return res.status(404).json({ success: false, message: 'Deposit request not found.' });
+  }
+
+  if (deposit.status === 'APPROVED') {
+    return res.status(400).json({
+      success: false,
+      message: 'Deposit is already approved and funds have been credited. Cannot reject.'
+    });
+  }
+  if (deposit.status === 'REJECTED') {
+    return res.status(400).json({
+      success: false,
+      message: 'Deposit has already been rejected previously.'
+    });
+  }
+
+  const now = new Date().toISOString();
+  deposit.status = 'REJECTED';
+  deposit.rejectionReason = reason || 'Payment could not be verified by administrator';
+  deposit.updatedAt = now;
+  deposit.adminActionBy = req.admin ? req.admin.username : 'admin';
+
+  // Update matching transaction in db.walletTransactions (Do NOT credit money)
+  if (db.walletTransactions) {
+    const tx = db.walletTransactions.find(t => t.depositId === deposit.id || (t.utr === deposit.utr && t.type === 'DEPOSIT'));
+    if (tx) {
+      tx.status = 'REJECTED';
+      tx.updatedAt = now;
+      tx.rejectionReason = deposit.rejectionReason;
+    }
+  }
+
+  saveData();
+
+  res.json({
+    success: true,
+    message: 'Deposit request rejected.',
+    deposit
+  });
+});
+
 // Admin: Overview Statistics
 app.get('/api/admin/stats', verifyAdmin, (req, res) => {
   const pendingCount = db.paymentRequests.filter(r => r.status === 'PENDING').length;
@@ -901,6 +1066,12 @@ app.get('/api/admin/stats', verifyAdmin, (req, res) => {
     .filter(r => r.status === 'APPROVED')
     .reduce((sum, r) => sum + (r.amount || 0), 0);
 
+  const pendingDepositsCount = (db.walletDeposits || []).filter(d => d.status === 'PENDING').length;
+  const approvedDepositsCount = (db.walletDeposits || []).filter(d => d.status === 'APPROVED').length;
+  const totalDepositVolume = (db.walletDeposits || [])
+    .filter(d => d.status === 'APPROVED')
+    .reduce((sum, d) => sum + (Number(d.amount) || 0), 0);
+
   res.json({
     success: true,
     stats: {
@@ -908,6 +1079,9 @@ app.get('/api/admin/stats', verifyAdmin, (req, res) => {
       approved: approvedCount,
       rejected: rejectedCount,
       totalRevenue,
+      pendingDeposits: pendingDepositsCount,
+      approvedDeposits: approvedDepositsCount,
+      totalDepositVolume,
       totalKeys: db.keys.length,
       activeRedeemedKeys: db.keys.filter(k => k.isRedeemed).length,
       totalUsers: db.users.length

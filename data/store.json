@@ -129,5 +129,6 @@
       "createdAt": "2026-10-03T14:57:10.293Z"
     }
   ],
-  "adminPasswordHash": "$2b$10$gc45b2XoySkqf1cOXWcGCOA6dnHa3fxLZBvBYs0gb1qWhpxVZgQwi"
+  "adminPasswordHash": "$2b$10$gc45b2XoySkqf1cOXWcGCOA6dnHa3fxLZBvBYs0gb1qWhpxVZgQwi",
+  "walletDeposits": []
 }

@@ -51,16 +51,20 @@
 
     <!-- Top Key Metrics -->
     <div class="stats-grid">
+      <div class="stat-card alert" style="border-color: var(--admin-yellow);">
+        <span class="stat-title">Pending Wallet Deposits</span>
+        <span class="stat-num" id="statPendingDepositsCount" style="color: var(--admin-yellow);">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-title">Approved Deposit Volume</span>
+        <span class="stat-num" id="statDepositVolume">₹0</span>
+      </div>
       <div class="stat-card alert">
-        <span class="stat-title">Pending Payment Requests</span>
+        <span class="stat-title">Pending Plan Purchases</span>
         <span class="stat-num" id="statPendingCount">0</span>
       </div>
       <div class="stat-card">
-        <span class="stat-title">Approved Verifications</span>
-        <span class="stat-num" id="statApprovedCount">0</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-title">Total Platform Volume</span>
+        <span class="stat-title">Approved Plan Revenue</span>
         <span class="stat-num" id="statTotalVolume">₹0</span>
       </div>
       <div class="stat-card">
@@ -72,7 +76,10 @@
     <!-- Navigation Subtabs -->
     <div class="filter-bar">
       <div class="filter-btn-group">
-        <button type="button" class="filter-btn active" data-tab="requests">PAYMENT REQUESTS</button>
+        <button type="button" class="filter-btn active" data-tab="deposits">
+          WALLET DEPOSITS <span id="tabPendingDepositBadge" style="display: none; background: var(--admin-yellow); color: #000; border-radius: 99px; padding: 1px 7px; font-size: 0.7rem; font-weight: 900; margin-left: 4px;">0</span>
+        </button>
+        <button type="button" class="filter-btn" data-tab="requests">PLAN PURCHASES</button>
         <button type="button" class="filter-btn" data-tab="keys">KEYS REPOSITORY</button>
         <button type="button" class="filter-btn" data-tab="gamelinks">GAME LINKS</button>
       </div>
@@ -81,10 +88,26 @@
       </button>
     </div>
 
-    <!-- 1. Requests Sub-View -->
-    <div id="subviewRequests">
+    <!-- 0. Wallet Deposits Sub-View -->
+    <div id="subviewDeposits">
       <!-- Status Filter -->
-      <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+      <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+        <button type="button" class="dep-filter-btn active" data-status="all" style="background: rgba(255,255,255,0.08); border: 1px solid var(--admin-border); color: #fff; padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; cursor: pointer;">All Deposits</button>
+        <button type="button" class="dep-filter-btn" data-status="pending" style="background: transparent; border: 1px solid var(--admin-border); color: var(--admin-yellow); padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; cursor: pointer;">Pending Approval</button>
+        <button type="button" class="dep-filter-btn" data-status="approved" style="background: transparent; border: 1px solid var(--admin-border); color: var(--admin-green); padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; cursor: pointer;">Approved</button>
+        <button type="button" class="dep-filter-btn" data-status="rejected" style="background: transparent; border: 1px solid var(--admin-border); color: var(--admin-red); padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; cursor: pointer;">Rejected</button>
+      </div>
+
+      <!-- Deposits Grid -->
+      <div class="requests-grid" id="depositsContainer">
+        <div style="text-align: center; color: var(--text-dim); padding: 40px;">Loading wallet deposits...</div>
+      </div>
+    </div>
+
+    <!-- 1. Requests Sub-View -->
+    <div id="subviewRequests" style="display: none;">
+      <!-- Status Filter -->
+      <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
         <button type="button" class="req-filter-btn active" data-status="all" style="background: rgba(255,255,255,0.08); border: 1px solid var(--admin-border); color: #fff; padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; cursor: pointer;">All</button>
         <button type="button" class="req-filter-btn" data-status="pending" style="background: transparent; border: 1px solid var(--admin-border); color: var(--admin-yellow); padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; cursor: pointer;">Pending</button>
         <button type="button" class="req-filter-btn" data-status="approved" style="background: transparent; border: 1px solid var(--admin-border); color: var(--admin-green); padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; cursor: pointer;">Approved</button>

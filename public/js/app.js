@@ -135,9 +135,18 @@
   // Update User Status Tag in Header (Displays Logged-in Username + ✕ Logout Option)
   function updateUserTag() {
     const userPill = document.getElementById('userPill');
+    const headerWalletPill = document.getElementById('headerWalletPill');
     if (!userPill) return;
 
     if (state.user && !state.user.isGuest && state.user.username) {
+      if (headerWalletPill) {
+        headerWalletPill.style.display = 'inline-flex';
+        headerWalletPill.onclick = () => {
+          loadWallet();
+          switchView('wallet');
+        };
+      }
+
       userPill.className = 'user-status-pill logged-in';
       userPill.removeAttribute('role');
       userPill.title = `Logged in as ${state.user.username} (Click ✕ to logout)`;
@@ -161,6 +170,8 @@
         });
       }
     } else {
+      if (headerWalletPill) headerWalletPill.style.display = 'none';
+
       userPill.className = 'user-status-pill is-guest';
       userPill.setAttribute('role', 'button');
       userPill.title = 'Click to Login or Sign Up';
@@ -547,36 +558,77 @@
     }
   }
 
-  // Wallet Balance & Transaction History
+  // Wallet Balance & Transaction History (Available vs Pending Display)
   async function loadWallet() {
     if (!state.user) await initGuestSession();
     try {
       const res = await fetch(`/api/wallet?userId=${state.user?.id}`);
       const data = await res.json();
       if (data.success) {
-        document.getElementById('walletBalanceDisplay').textContent = `₹${(data.balance || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
-        
+        const availBal = data.availableBalance !== undefined ? data.availableBalance : (data.balance || 0);
+        const pendAmt = data.pendingAmount || 0;
+
+        const availDisplay = document.getElementById('walletBalanceDisplay');
+        if (availDisplay) {
+          availDisplay.textContent = `₹${availBal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+
+        const pendDisplay = document.getElementById('walletPendingDisplay');
+        if (pendDisplay) {
+          pendDisplay.textContent = `₹${pendAmt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+
+        const headerWalletAmt = document.getElementById('headerWalletAmt');
+        if (headerWalletAmt) {
+          headerWalletAmt.textContent = `₹${availBal.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
+        }
+
         const txList = document.getElementById('walletTxList');
         if (txList) {
           if (!data.transactions || data.transactions.length === 0) {
-            txList.innerHTML = '<div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 12px;">No transactions recorded yet.</div>';
+            txList.innerHTML = '<div style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 18px;">No transactions recorded yet.</div>';
           } else {
-            txList.innerHTML = data.transactions.map(t => `
-              <div class="history-item">
-                <div>
-                  <div style="font-weight: 700; color: #fff; font-size: 0.85rem;">
-                    ${t.type === 'DEPOSIT' ? 'Deposit (+2% Daily)' : (t.type === 'WITHDRAWAL' ? 'Withdrawal' : t.type)}
+            txList.innerHTML = data.transactions.map(t => {
+              const isDeposit = t.type === 'DEPOSIT';
+              const isPending = t.status === 'PENDING';
+              const isApproved = t.status === 'APPROVED' || t.status === 'COMPLETED';
+              const isRejected = t.status === 'REJECTED';
+
+              let badgeHtml = '';
+              if (isPending) {
+                badgeHtml = '<span class="tx-badge pending">⏳ Pending Approval</span>';
+              } else if (isApproved) {
+                badgeHtml = '<span class="tx-badge approved">✔ Approved</span>';
+              } else if (isRejected) {
+                badgeHtml = '<span class="tx-badge rejected">✖ Rejected</span>';
+              } else {
+                badgeHtml = `<span class="tx-badge">${escapeHtml(t.status || 'COMPLETED')}</span>`;
+              }
+
+              const sign = isDeposit ? '+' : '-';
+              const amtColor = isDeposit ? (isPending ? 'var(--neon-yellow)' : 'var(--neon-green)') : 'var(--neon-accent)';
+
+              return `
+                <div class="history-item">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="font-weight: 700; color: #fff; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                      <span>${isDeposit ? 'Deposit Request' : (t.type === 'WITHDRAWAL' ? 'Withdrawal' : t.type)}</span>
+                      ${badgeHtml}
+                    </div>
+                    <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 3px;">
+                      ${new Date(t.createdAt).toLocaleString()} ${t.utr ? '• Ref / UTR: ' + t.utr : ''}
+                    </div>
+                    ${t.rejectionReason ? `<div style="font-size: 0.7rem; color: #ff6b81; margin-top: 2px;">Reason: ${escapeHtml(t.rejectionReason)}</div>` : ''}
                   </div>
-                  <div style="font-size: 0.72rem; color: var(--text-muted);">${new Date(t.createdAt).toLocaleString()} ${t.utr ? '• Ref: ' + t.utr : ''}</div>
-                </div>
-                <div style="text-align: right;">
-                  <div style="font-size: 0.9rem; font-weight: 800; color: ${t.type === 'DEPOSIT' ? 'var(--neon-green)' : 'var(--neon-accent)'};">
-                    ${t.type === 'DEPOSIT' ? '+' : '-'}₹${Number(t.amount).toLocaleString('en-IN')}
+                  <div style="text-align: right; margin-left: 8px;">
+                    <div style="font-size: 0.95rem; font-weight: 800; color: ${amtColor}; font-family: monospace;">
+                      ${sign}₹${Number(t.amount).toLocaleString('en-IN')}
+                    </div>
+                    ${isDeposit && isPending ? '<span style="font-size: 0.65rem; color: var(--neon-yellow); display: block;">Pending Admin</span>' : ''}
                   </div>
-                  <span class="user-status-pill" style="font-size: 0.65rem; padding: 2px 6px;">${t.status || 'COMPLETED'}</span>
                 </div>
-              </div>
-            `).join('');
+              `;
+            }).join('');
           }
         }
       }
@@ -941,7 +993,35 @@
         const data = await res.json();
 
         if (data.success) {
-          showToast(data.message, 'success');
+          showToast('Payment submitted. Wallet balance will be updated after admin approval.', 'success');
+
+          // Display the Deposit Status Alert box with full details
+          const alertBox = document.getElementById('depositStatusAlert');
+          const alertDetails = document.getElementById('depositAlertDetails');
+          if (alertBox && alertDetails) {
+            const dep = data.deposit || {};
+            alertDetails.innerHTML = `
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <span>Requested Amount:</span>
+                <strong style="color: var(--neon-green); font-size: 0.85rem;">₹${Number(dep.amount || numAmount).toLocaleString('en-IN')}</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <span>UTR / Reference:</span>
+                <strong style="letter-spacing: 1px; color: #fff;">${escapeHtml(dep.utr || utr)}</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <span>Date & Time:</span>
+                <span>${new Date(dep.createdAt || Date.now()).toLocaleString()}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>Current Status:</span>
+                <span style="color: #facc15; font-weight: 800;">PENDING ADMIN APPROVAL</span>
+              </div>
+            `;
+            alertBox.style.display = 'block';
+            alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+
           document.getElementById('depositAmount').value = '';
           document.getElementById('depositUtr').value = '';
           loadWallet();

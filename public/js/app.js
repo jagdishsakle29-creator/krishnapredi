@@ -841,7 +841,6 @@
       }
 
       setupWalletUpiAppLinks(numAmt);
-      showToast(`Selected ₹${numAmt} (Daily Return: +₹${(numAmt * 0.02).toFixed(1)}/day)`, 'success');
     };
 
     // Attach click and touchend on amount cards

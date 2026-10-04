@@ -387,16 +387,175 @@
         </p>
 
         <form id="gameLinkSubmitForm">
-          <div class="form-group">
-            <label class="form-label" for="selectGame">Select Game</label>
-            <select id="selectGame" class="game-select-dropdown" required>
-              <option value="Aviator">Aviator (Flight Multiplier Matrix)</option>
-              <option value="Mines">Mines (Safe Tile Grid Heatmap)</option>
-              <option value="Dragon vs Tiger">Dragon vs Tiger (Streak Probability)</option>
-              <option value="Wingo">Wingo (Quantum Color & Number)</option>
-              <option value="Crash">Crash (High-Altitude Vector)</option>
-              <option value="Roulette">Roulette (European Zero Risk Node)</option>
+          <div class="form-group custom-select-group">
+            <label class="form-label" for="selectGameTrigger">Select Game</label>
+            
+            <!-- Hidden native select for form serialization & programmatic compatibility -->
+            <select id="selectGame" name="game" style="display: none;" required>
+              <option value="Prime Games" selected>Prime Games</option>
+              <option value="Aviator">Aviator</option>
+              <option value="Mines">Mines</option>
+              <option value="Dragon vs Tiger">Dragon vs Tiger</option>
+              <option value="Wingo">Wingo</option>
+              <option value="Crash">Crash</option>
+              <option value="Roulette">Roulette</option>
             </select>
+
+            <!-- Custom Cyber Glassmorphism Dropdown -->
+            <div class="custom-dropdown" id="customGameDropdown">
+              <button type="button" class="custom-dropdown-trigger" id="selectGameTrigger" aria-haspopup="listbox" aria-expanded="false">
+                <div class="dropdown-trigger-icon" id="triggerGameIcon">
+                  <span class="game-emoji-icon">👑</span>
+                </div>
+                <div class="dropdown-trigger-text">
+                  <div class="dropdown-trigger-title" id="triggerGameTitle">👑 PRIME GAMES</div>
+                  <div class="dropdown-trigger-sub" id="triggerGameSubtitle">BC Game / Stake / Primatch / Colour Trading</div>
+                </div>
+                <div class="dropdown-trigger-arrow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
+              </button>
+
+              <!-- Dropdown Menu List -->
+              <div class="custom-dropdown-menu" id="customGameMenu" role="listbox">
+                <!-- 1. PRIME GAMES -->
+                <div class="custom-dropdown-item active" data-value="Prime Games" data-title="👑 PRIME GAMES" data-sub="BC Game / Stake / Primatch / Colour Trading" data-icon="👑" role="option" aria-selected="true" tabindex="0">
+                  <div class="game-item-icon">
+                    <span class="game-emoji-icon">👑</span>
+                  </div>
+                  <div class="game-item-text">
+                    <div class="game-item-title">PRIME GAMES</div>
+                    <div class="game-item-subtitle">BC Game / Stake / Primatch / Colour Trading</div>
+                  </div>
+                  <div class="game-item-check">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- 2. Aviator -->
+                <div class="custom-dropdown-item" data-value="Aviator" data-title="Aviator" data-sub="Flight Multiplier" data-icon="✈️" role="option" aria-selected="false" tabindex="0">
+                  <div class="game-item-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7c-.8-.2-1.6.1-2.1.7l-.7.7 6.4 3.6-3.6 3.6-2.5-.4c-.5-.1-1 .1-1.4.5l-.4.4 3.2 1.8 1.8 3.2.4-.4c.4-.4.6-.9.5-1.4l-.4-2.5 3.6-3.6 3.6 6.4.7-.7c.6-.5.9-1.3.7-2.1z"/>
+                    </svg>
+                  </div>
+                  <div class="game-item-text">
+                    <div class="game-item-title">Aviator</div>
+                    <div class="game-item-subtitle">Flight Multiplier</div>
+                  </div>
+                  <div class="game-item-check">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- 3. Mines -->
+                <div class="custom-dropdown-item" data-value="Mines" data-title="Mines" data-sub="Safe Tile Grid" data-icon="💎" role="option" aria-selected="false" tabindex="0">
+                  <div class="game-item-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                      <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                      <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                      <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+                    </svg>
+                  </div>
+                  <div class="game-item-text">
+                    <div class="game-item-title">Mines</div>
+                    <div class="game-item-subtitle">Safe Tile Grid</div>
+                  </div>
+                  <div class="game-item-check">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- 4. Dragon vs Tiger -->
+                <div class="custom-dropdown-item" data-value="Dragon vs Tiger" data-title="Dragon vs Tiger" data-sub="Game Mode" data-icon="🐉" role="option" aria-selected="false" tabindex="0">
+                  <div class="game-item-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                  </div>
+                  <div class="game-item-text">
+                    <div class="game-item-title">Dragon vs Tiger</div>
+                    <div class="game-item-subtitle">Game Mode</div>
+                  </div>
+                  <div class="game-item-check">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- 5. Wingo -->
+                <div class="custom-dropdown-item" data-value="Wingo" data-title="Wingo" data-sub="Colour & Number" data-icon="🎨" role="option" aria-selected="false" tabindex="0">
+                  <div class="game-item-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <circle cx="12" cy="12" r="6"></circle>
+                      <circle cx="12" cy="12" r="2"></circle>
+                    </svg>
+                  </div>
+                  <div class="game-item-text">
+                    <div class="game-item-title">Wingo</div>
+                    <div class="game-item-subtitle">Colour & Number</div>
+                  </div>
+                  <div class="game-item-check">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- 6. Crash -->
+                <div class="custom-dropdown-item" data-value="Crash" data-title="Crash" data-sub="Multiplier Game" data-icon="🚀" role="option" aria-selected="false" tabindex="0">
+                  <div class="game-item-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+                      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
+                    </svg>
+                  </div>
+                  <div class="game-item-text">
+                    <div class="game-item-title">Crash</div>
+                    <div class="game-item-subtitle">Multiplier Game</div>
+                  </div>
+                  <div class="game-item-check">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- 7. Roulette -->
+                <div class="custom-dropdown-item" data-value="Roulette" data-title="Roulette" data-sub="European Roulette" data-icon="🎡" role="option" aria-selected="false" tabindex="0">
+                  <div class="game-item-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <circle cx="12" cy="12" r="4"></circle>
+                      <line x1="12" y1="2" x2="12" y2="8"></line>
+                      <line x1="12" y1="16" x2="12" y2="22"></line>
+                      <line x1="2" y1="12" x2="8" y2="12"></line>
+                      <line x1="16" y1="12" x2="22" y2="12"></line>
+                    </svg>
+                  </div>
+                  <div class="game-item-text">
+                    <div class="game-item-title">Roulette</div>
+                    <div class="game-item-subtitle">European Roulette</div>
+                  </div>
+                  <div class="game-item-check">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="form-group">
@@ -409,9 +568,11 @@
 
           <!-- Preview Card -->
           <div class="game-preview-card" id="gameLinkPreviewCard" style="display: none;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--neon-green)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6z"/></svg>
-            <div style="overflow: hidden;">
-              <div id="previewGameTitle" style="font-weight: 700; color: #fff; font-size: 0.88rem;">Aviator</div>
+            <div id="previewGameIcon" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; color: var(--neon-green);">
+              <span class="game-emoji-icon" style="font-size: 1.1rem;">👑</span>
+            </div>
+            <div style="overflow: hidden; flex: 1; min-width: 0;">
+              <div id="previewGameTitle" style="font-weight: 700; color: #fff; font-size: 0.88rem;">👑 PRIME GAMES</div>
               <div id="previewGameUrl" style="font-size: 0.74rem; color: var(--text-muted); text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">https://...</div>
             </div>
           </div>

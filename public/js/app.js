@@ -516,7 +516,8 @@
     document.getElementById('dashActiveKeyText').textContent = p.key;
 
     if (state.gameLinkData) {
-      document.getElementById('dashSelectedGame').textContent = state.gameLinkData.game;
+      const g = state.gameLinkData.game;
+      document.getElementById('dashSelectedGame').textContent = (g === 'Prime Games' || g === 'PRIME GAMES') ? '👑 PRIME GAMES' : g;
       document.getElementById('dashGameLinkPreview').textContent = state.gameLinkData.gameLink;
     }
 
@@ -1203,18 +1204,89 @@
       }
     });
 
-    // Game Link Input Preview
+    // Custom Cyber Glassmorphism Dropdown Initialization & Game Preview
     const selectGame = document.getElementById('selectGame');
     const inputGameLink = document.getElementById('inputGameLink');
     const previewCard = document.getElementById('gameLinkPreviewCard');
     const previewGameTitle = document.getElementById('previewGameTitle');
     const previewGameUrl = document.getElementById('previewGameUrl');
+    const previewGameIcon = document.getElementById('previewGameIcon');
+
+    const customDropdown = document.getElementById('customGameDropdown');
+    const dropdownTrigger = document.getElementById('selectGameTrigger');
+    const dropdownItems = document.querySelectorAll('.custom-dropdown-item');
+    const triggerTitle = document.getElementById('triggerGameTitle');
+    const triggerSub = document.getElementById('triggerGameSubtitle');
+    const triggerIcon = document.getElementById('triggerGameIcon');
+
+    // Toggle dropdown open / close
+    dropdownTrigger?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = customDropdown.classList.contains('open');
+      if (isOpen) {
+        customDropdown.classList.remove('open');
+        dropdownTrigger.setAttribute('aria-expanded', 'false');
+      } else {
+        customDropdown.classList.add('open');
+        dropdownTrigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // Close dropdown on outside click
+    document.addEventListener('click', (e) => {
+      if (customDropdown && !customDropdown.contains(e.target)) {
+        customDropdown.classList.remove('open');
+        dropdownTrigger?.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && customDropdown?.classList.contains('open')) {
+        customDropdown.classList.remove('open');
+        dropdownTrigger?.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Handle Item Selection with Green Highlight & Checkmark
+    dropdownItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const val = item.getAttribute('data-value');
+        const title = item.getAttribute('data-title') || val;
+        const sub = item.getAttribute('data-sub') || '';
+        const iconHtml = item.querySelector('.game-item-icon')?.innerHTML || '';
+
+        dropdownItems.forEach(i => {
+          i.classList.remove('active');
+          i.setAttribute('aria-selected', 'false');
+        });
+        item.classList.add('active');
+        item.setAttribute('aria-selected', 'true');
+
+        if (selectGame) {
+          selectGame.value = val;
+          selectGame.dispatchEvent(new Event('change'));
+        }
+
+        if (triggerTitle) triggerTitle.textContent = title;
+        if (triggerSub) triggerSub.textContent = sub;
+        if (triggerIcon && iconHtml) triggerIcon.innerHTML = iconHtml;
+        if (previewGameIcon && iconHtml) previewGameIcon.innerHTML = iconHtml;
+
+        customDropdown.classList.remove('open');
+        dropdownTrigger.setAttribute('aria-expanded', 'false');
+        updateGamePreview();
+      });
+    });
 
     function updateGamePreview() {
       const url = inputGameLink.value.trim();
+      const activeItem = document.querySelector('.custom-dropdown-item.active');
+      const displayTitle = activeItem ? (activeItem.getAttribute('data-title') || activeItem.getAttribute('data-value')) : selectGame.value;
+
       if (url) {
         previewCard.style.display = 'flex';
-        previewGameTitle.textContent = selectGame.value;
+        previewGameTitle.textContent = displayTitle;
         previewGameUrl.textContent = url;
       } else {
         previewCard.style.display = 'none';

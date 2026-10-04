@@ -604,13 +604,24 @@ app.post('/api/predictions/generate', (req, res) => {
   }
 
   // Algorithmic signal calculation (Realistic simulation based on neutral historical modeling)
-  const gamesList = ['Aviator', 'Mines', 'Dragon vs Tiger', 'Wingo', 'Roulette', 'Crash'];
-  const activeGame = game || (db.gameLinks.find(g => g.key === keyRecord.key)?.game) || 'Aviator';
+  const gamesList = ['Prime Games', 'Aviator', 'Mines', 'Dragon vs Tiger', 'Wingo', 'Crash', 'Roulette'];
+  const activeGame = game || (db.gameLinks.find(g => g.key === keyRecord.key)?.game) || 'Prime Games';
 
   let predictionData = {};
   const rand = Math.random();
 
-  if (activeGame === 'Aviator' || activeGame === 'Crash') {
+  if (activeGame === 'Prime Games') {
+    const suites = ['BC Game Multiplier', 'Stake Crash Vector', 'Primatch Cycle', 'Colour Trading Frequency'];
+    const chosenSuite = suites[Math.floor(Math.random() * suites.length)];
+    const mult = (1.65 + Math.random() * 3.5).toFixed(2);
+    predictionData = {
+      signalType: 'PRIME_SUITE_SIGNAL',
+      selectedPlatform: chosenSuite,
+      signalVector: `${mult}x Wave`,
+      estimatedConfidence: `${(87 + Math.random() * 9).toFixed(1)}% Platform Index`,
+      recommendation: `Synchronized parameters active for ${chosenSuite}.`
+    };
+  } else if (activeGame === 'Aviator' || activeGame === 'Crash') {
     const mult = (1.55 + Math.random() * 4.2).toFixed(2);
     const safeCashout = (mult * 0.75).toFixed(2);
     predictionData = {

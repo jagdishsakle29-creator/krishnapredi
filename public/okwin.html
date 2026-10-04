@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>OK.WIN — Official Luxury Wingo Color Prediction</title>
+  <meta name="description" content="OK.WIN Official Color Prediction & Lottery Platform. Win Go 1Min, 3Min, 5Min with instant withdrawals.">
+  <meta name="theme-color" content="#12050e">
+  <link rel="stylesheet" href="/css/okwin.css">
+  <link rel="icon" type="image/png" href="/images/loki_hero.png">
+</head>
+<body>
+
+  <div class="okwin-app-container">
+    
+    <!-- Top Header -->
+    <header class="ok-header">
+      <a href="/" class="ok-back-btn" title="Back to Terminal">
+        <span>‹</span> Back
+      </a>
+      <div class="ok-logo-wrap">
+        <span class="ok-crown">👑</span>
+        <span class="ok-logo-text">OK.WIN</span>
+      </div>
+      <div class="ok-header-right">
+        <button class="ok-icon-btn" id="soundToggleBtn" title="Sound Effects">🔊</button>
+        <a href="https://t.me/easybasepoint" target="_blank" rel="noopener noreferrer" class="ok-icon-btn" title="Telegram Customer Service" style="text-decoration: none;">🎧</a>
+      </div>
+    </header>
+
+    <!-- Wallet & Balance Card -->
+    <div class="ok-wallet-card">
+      <div class="ok-wallet-info">
+        <span class="ok-balance-lbl">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+            <circle cx="12" cy="12" r="2"></circle>
+          </svg>
+          Available Balance
+        </span>
+        <span class="ok-balance-val" id="balanceVal">₹0.00</span>
+      </div>
+      <div class="ok-wallet-actions">
+        <a href="/?action=deposit" class="ok-recharge-btn">
+          <span>+</span> Deposit
+        </a>
+      </div>
+    </div>
+
+    <!-- Wingo Time Modes (Tabs) -->
+    <div class="ok-tabs-nav">
+      <div class="ok-tab-item">
+        <span class="ok-tab-time">Win Go</span>
+        <span class="ok-tab-sub">30s</span>
+      </div>
+      <div class="ok-tab-item active">
+        <span class="ok-tab-time">Win Go</span>
+        <span class="ok-tab-sub">1Min</span>
+      </div>
+      <div class="ok-tab-item">
+        <span class="ok-tab-time">Win Go</span>
+        <span class="ok-tab-sub">3Min</span>
+      </div>
+      <div class="ok-tab-item">
+        <span class="ok-tab-time">Win Go</span>
+        <span class="ok-tab-sub">5Min</span>
+      </div>
+    </div>
+
+    <!-- Active Stage & Digital Countdown -->
+    <div class="ok-stage-card" id="stageCard">
+      <div class="ok-stage-header">
+        <span class="ok-game-mode-pill">
+          <span>🔥</span> Win Go 1Min
+        </span>
+        <button class="ok-how-to-btn" onclick="alert('How to Play:\n\n1. Select Color (Green 2x, Violet 4.5x, Red 2x)\n2. Select Number 0-9 (9x)\n3. Select Big (5-9) or Small (0-4) (2x)\n\nCountdown runs every 1 minute. Last 5 seconds are locked!')">How to play</button>
+      </div>
+
+      <div class="ok-stage-body">
+        <div class="ok-period-col">
+          <span class="ok-period-lbl">Period</span>
+          <span class="ok-period-num" id="periodNum">Loading...</span>
+        </div>
+        <div class="ok-timer-col">
+          <span class="ok-timer-lbl">Time Remaining</span>
+          <div class="ok-digital-clock">
+            <span class="ok-time-digit" id="clockMin">00</span>
+            <span class="ok-time-colon">:</span>
+            <span class="ok-time-digit" id="clockSec">60</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent mini balls strip -->
+      <div class="ok-recent-strip">
+        <span class="ok-recent-lbl">Recent Results:</span>
+        <div class="ok-recent-balls" id="recentStrip"></div>
+      </div>
+
+      <!-- Locked Countdown Overlay (activates on last 5s) -->
+      <div class="ok-drawing-overlay" id="lockOverlay">
+        <div class="ok-lock-clock" id="lockCountdown">05</div>
+        <div class="ok-lock-msg">DRAWING RESULT...</div>
+      </div>
+    </div>
+
+    <!-- Betting Console -->
+    <div class="ok-bet-console">
+      
+      <!-- 3 Primary Colors -->
+      <div class="ok-colors-row">
+        <button class="ok-color-btn green" data-color="green" data-odds="2x">
+          <span class="ok-color-name">Green</span>
+          <span class="ok-color-odds">2x</span>
+        </button>
+        <button class="ok-color-btn violet" data-color="violet" data-odds="4.5x">
+          <span class="ok-color-name">Violet</span>
+          <span class="ok-color-odds">4.5x</span>
+        </button>
+        <button class="ok-color-btn red" data-color="red" data-odds="2x">
+          <span class="ok-color-name">Red</span>
+          <span class="ok-color-odds">2x</span>
+        </button>
+      </div>
+
+      <!-- Numbers 0-9 Grid -->
+      <div class="ok-numbers-grid">
+        <button class="ok-num-ball ball-0" data-num="0">0</button>
+        <button class="ok-num-ball ball-green" data-num="1">1</button>
+        <button class="ok-num-ball ball-red" data-num="2">2</button>
+        <button class="ok-num-ball ball-green" data-num="3">3</button>
+        <button class="ok-num-ball ball-red" data-num="4">4</button>
+        <button class="ok-num-ball ball-5" data-num="5">5</button>
+        <button class="ok-num-ball ball-red" data-num="6">6</button>
+        <button class="ok-num-ball ball-green" data-num="7">7</button>
+        <button class="ok-num-ball ball-red" data-num="8">8</button>
+        <button class="ok-num-ball ball-green" data-num="9">9</button>
+      </div>
+
+      <!-- Quick Multiplier Pills -->
+      <div class="ok-multipliers-row">
+        <div class="ok-multi-pill active" data-multi="1">X1</div>
+        <div class="ok-multi-pill" data-multi="5">X5</div>
+        <div class="ok-multi-pill" data-multi="10">X10</div>
+        <div class="ok-multi-pill" data-multi="20">X20</div>
+        <div class="ok-multi-pill" data-multi="50">X50</div>
+        <div class="ok-multi-pill" data-multi="100">X100</div>
+      </div>
+
+      <!-- Big & Small Row -->
+      <div class="ok-bigsmall-row">
+        <button class="ok-bs-btn big" data-bs="big">
+          <span>Big</span>
+          <span style="font-size: 11px; opacity: 0.9;">(5-9) 2x</span>
+        </button>
+        <button class="ok-bs-btn small" data-bs="small">
+          <span>Small</span>
+          <span style="font-size: 11px; opacity: 0.9;">(0-4) 2x</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- History & Records Section -->
+    <div class="ok-records-section">
+      <div class="ok-records-tabs">
+        <div class="ok-rec-tab active" data-pane="gameHistoryPane">Game History</div>
+        <div class="ok-rec-tab" data-pane="myBetsPane">My Bets</div>
+      </div>
+
+      <!-- Tab 1: Game History -->
+      <div class="ok-tab-pane active" id="gameHistoryPane">
+        <table class="ok-table">
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Number</th>
+              <th>Big/Small</th>
+              <th>Color</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody">
+            <tr>
+              <td colspan="4" style="padding: 20px; color: #6b7280;">Loading history...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Tab 2: My Bets -->
+      <div class="ok-tab-pane" id="myBetsPane">
+        <table class="ok-table">
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Select</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="myBetsTableBody">
+            <tr>
+              <td colspan="4" style="padding: 20px; color: #6b7280;">Loading bets...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="ok-bottom-nav">
+      <a href="/" class="ok-nav-item">
+        <span class="ok-nav-icon">⚡</span>
+        <span>Terminal</span>
+      </a>
+      <a href="/okwin" class="ok-nav-item active">
+        <span class="ok-nav-icon">👑</span>
+        <span>Win Go</span>
+      </a>
+      <a href="https://t.me/easybasepoint" target="_blank" rel="noopener noreferrer" class="ok-nav-item">
+        <span class="ok-nav-icon">🎁</span>
+        <span>Telegram</span>
+      </a>
+      <a href="/?action=deposit" class="ok-nav-item">
+        <span class="ok-nav-icon">👛</span>
+        <span>Wallet</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- Interactive Betting Sheet Modal (Bottom Drawer) -->
+  <div class="ok-modal-overlay" id="betModal">
+    <div class="ok-bet-sheet">
+      <div class="ok-sheet-header">
+        <div class="ok-sheet-title">
+          <span>Betting</span>
+          <span class="ok-target-pill" id="modalTargetPill">Select</span>
+        </div>
+        <button class="ok-sheet-close" id="modalCloseBtn">✕</button>
+      </div>
+
+      <!-- Chip Amount Options -->
+      <div class="ok-chips-row">
+        <button class="ok-chip-btn active" data-amt="10">₹10</button>
+        <button class="ok-chip-btn" data-amt="50">₹50</button>
+        <button class="ok-chip-btn" data-amt="100">₹100</button>
+        <button class="ok-chip-btn" data-amt="500">₹500</button>
+        <button class="ok-chip-btn" data-amt="1000">₹1K</button>
+      </div>
+
+      <!-- Quantity Counter -->
+      <div class="ok-counter-row">
+        <span class="ok-counter-lbl">Multiplier</span>
+        <div class="ok-counter-ctrls">
+          <button class="ok-cnt-btn" id="cntMinusBtn">−</button>
+          <span class="ok-cnt-val" id="modalCounterVal">1</span>
+          <button class="ok-cnt-btn" id="cntPlusBtn">+</button>
+        </div>
+      </div>
+
+      <!-- Total Bet Summary -->
+      <div class="ok-sheet-summary">
+        <span class="ok-sum-lbl">Total Contract Amount</span>
+        <span class="ok-sum-amt" id="modalTotalAmt">₹10</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="ok-sheet-actions">
+        <button class="ok-sheet-cancel" id="modalCancelBtn">Cancel</button>
+        <button class="ok-sheet-confirm" id="modalConfirmBtn">Confirm Bet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result Celebration Modal -->
+  <div class="ok-win-modal" id="winModal">
+    <div class="ok-win-card">
+      <div class="ok-win-crown">👑</div>
+      <div class="ok-win-title">ROUND RESULT</div>
+      <div class="ok-win-period" id="winPeriod">Period: 20261004...</div>
+      
+      <div class="ok-win-ball-wrap">
+        <div class="ok-win-big-ball ball-green" id="winBigBall">7</div>
+      </div>
+
+      <div class="ok-win-details" id="winDetails">
+        <span>GREEN</span>
+        <span>•</span>
+        <span>BIG</span>
+      </div>
+
+      <button class="ok-win-btn" id="winCloseBtn">Continue Playing</button>
+    </div>
+  </div>
+
+  <script src="/js/okwin.js"></script>
+</body>
+</html>

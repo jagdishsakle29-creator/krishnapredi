@@ -88,6 +88,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(UPLOAD_DIR));
 
+// Keep-Alive / Health Check Endpoints
+app.get('/ping', (req, res) => res.status(200).send('PONG'));
+app.get('/healthz', (req, res) => res.status(200).json({ status: 'OK', uptime: process.uptime() }));
+
+// Auto Self-Ping Heartbeat to prevent Render sleep
+const APP_URL = process.env.RENDER_EXTERNAL_URL || 'https://krishnapredi-2.onrender.com';
+setInterval(() => {
+  try {
+    const client = APP_URL.startsWith('https') ? require('https') : require('http');
+    client.get(`${APP_URL}/ping`, () => {}).on('error', () => {});
+  } catch (e) {}
+}, 10 * 60 * 1000); // Pings every 10 minutes
+
 // Rate Limiter for Auth & Payments
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,

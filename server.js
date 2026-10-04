@@ -28,8 +28,9 @@ try {
   }
 } catch (e) {}
 
-// Initial Admin Password Hash (Password: "lordgrow2026")
-const ADMIN_PASSWORD_HASH = bcrypt.hashSync('lordgrow2026', 10);
+// Initial Admin Password (can be overridden via ADMIN_PASSWORD environment variable)
+const DEFAULT_ADMIN_PASS = process.env.ADMIN_PASSWORD || 'lordgrow2026';
+const ADMIN_PASSWORD_HASH = bcrypt.hashSync(DEFAULT_ADMIN_PASS, 10);
 
 // Default Seed Data
 let db = {
@@ -854,8 +855,9 @@ app.post('/api/admin/login', authLimiter, (req, res) => {
     return res.status(401).json({ success: false, message: 'Invalid admin credentials' });
   }
 
-  const valid = bcrypt.compareSync(password || '', db.adminPasswordHash);
-  if (!valid) {
+  const isEnvMatch = process.env.ADMIN_PASSWORD && password === process.env.ADMIN_PASSWORD;
+  const isHashMatch = bcrypt.compareSync(password || '', db.adminPasswordHash);
+  if (!isEnvMatch && !isHashMatch) {
     return res.status(401).json({ success: false, message: 'Invalid admin password' });
   }
 
@@ -1139,7 +1141,7 @@ if (!process.env.VERCEL) {
     console.log(`⚡ KrishanaPredi Server is Running`);
     console.log(`🌐 Web App:    http://localhost:${PORT}`);
     console.log(`🛡️  Admin Area: http://localhost:${PORT}/admin`);
-    console.log(`🔑 Admin Pass: lordgrow2026`);
+    console.log(`🔒 Security:   JWT Auth & Rate-Limiter Enabled`);
     console.log(`==================================================\n`);
   });
 }

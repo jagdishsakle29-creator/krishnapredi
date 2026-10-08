@@ -1093,8 +1093,8 @@
       try {
         const formData = new FormData();
         formData.append('screenshot', file);
-        formData.append('planId', state.selectedPlan ? state.selectedPlan.id : 'plan_589');
-        formData.append('amount', state.selectedPlan ? state.selectedPlan.price : 589);
+        formData.append('planId', state.selectedPlan ? state.selectedPlan.id : 'plan_1678');
+        formData.append('amount', state.selectedPlan ? state.selectedPlan.price : 1678);
         formData.append('utr', document.getElementById('paymentUtr').value || '');
         formData.append('userId', state.user?.id || 'GUEST_' + Date.now());
 
@@ -1109,7 +1109,7 @@
           // Update Status View Elements
           document.getElementById('statusReqId').textContent = data.requestId;
           document.getElementById('statusPlanName').textContent = state.selectedPlan ? state.selectedPlan.name : 'Starter';
-          document.getElementById('statusAmount').textContent = `₹${state.selectedPlan ? state.selectedPlan.price : 589}`;
+          document.getElementById('statusAmount').textContent = `₹${state.selectedPlan ? state.selectedPlan.price : 1678}`;
 
           document.getElementById('statusPendingState').style.display = 'block';
           document.getElementById('statusApprovedState').style.display = 'none';

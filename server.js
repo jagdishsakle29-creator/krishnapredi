@@ -89,6 +89,26 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(UPLOAD_DIR));
 
+// Mount OK.WIN Game Portal & Testing Sandbox
+try {
+  const okwinApp = require('./okwin/server');
+  app.use('/okwin', express.static(path.join(__dirname, 'okwin', 'public')));
+  app.get('/okwin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'okwin', 'public', 'index.html'));
+  });
+  app.use('/api/game', (req, res, next) => {
+    req.url = '/api/game' + req.url;
+    okwinApp(req, res, next);
+  });
+  app.use('/api/test', (req, res, next) => {
+    req.url = '/api/test' + req.url;
+    okwinApp(req, res, next);
+  });
+  console.log('🎮 [OK WIN] Game Portal & Test Injector mounted at /okwin and /api/test');
+} catch (e) {
+  console.error('⚠️ Could not mount OK.WIN sub-app:', e.message);
+}
+
 // Keep-Alive / Health Check Endpoints
 app.get('/ping', (req, res) => res.status(200).send('PONG'));
 app.get('/healthz', (req, res) => res.status(200).json({ status: 'OK', uptime: process.uptime() }));
@@ -156,9 +176,9 @@ function verifyAdmin(req, res, next) {
 // -------------------------------------------------------------
 const PLANS = [
   {
-    id: 'plan_589',
+    id: 'plan_1678',
     name: 'PLAN 1 — STARTER',
-    price: 589,
+    price: 1678,
     durationDays: 3,
     dailyPredictions: 9,
     performance: '85–88% Platform AI Prediction Accuracy',
@@ -172,9 +192,9 @@ const PLANS = [
     ]
   },
   {
-    id: 'plan_1298',
+    id: 'plan_2189',
     name: 'PLAN 2 — PRO ADVANCED',
-    price: 1298,
+    price: 2189,
     durationDays: 7,
     dailyPredictions: 21,
     performance: '90% Platform AI Prediction Accuracy',
@@ -188,9 +208,9 @@ const PLANS = [
     ]
   },
   {
-    id: 'plan_2091',
+    id: 'plan_2600',
     name: 'PLAN 3 — ULTRA MATRIX',
-    price: 2091,
+    price: 2600,
     durationDays: 15,
     dailyPredictions: 32,
     performance: '97% Platform AI Prediction Accuracy',
@@ -204,9 +224,9 @@ const PLANS = [
     ]
   },
   {
-    id: 'plan_2889',
+    id: 'plan_3366',
     name: 'PLAN 4 — LOKI SUPREME',
-    price: 2889,
+    price: 3366,
     durationDays: 25,
     dailyPredictions: 50,
     performance: 'Premium High-Altitude Flight Matrix & Vector Analysis',
@@ -247,7 +267,7 @@ app.get('/api/plans', (req, res) => {
 // 2. Generate Dynamic UPI QR Code
 app.get('/api/payment/qr', async (req, res) => {
   try {
-    const amount = req.query.amount || '589';
+    const amount = req.query.amount || '1678';
     const upiId = 'antaryami12@upi';
     const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent('KrishanaPredi')}&am=${encodeURIComponent(amount)}&cu=INR&tn=${encodeURIComponent('KrishanaPredi Plan Purchase')}`;
 
@@ -440,7 +460,7 @@ app.post('/api/payment/submit', upload.single('screenshot'), (req, res) => {
       userId: userId || 'GUEST_' + Date.now(),
       planId: plan ? plan.id : (planId || 'custom'),
       planName: plan ? plan.name : `Plan ₹${amount}`,
-      amount: Number(amount) || (plan ? plan.price : 589),
+      amount: Number(amount) || (plan ? plan.price : 1678),
       durationDays: plan ? plan.durationDays : 3,
       dailyPredictions: plan ? plan.dailyPredictions : 9,
       utr: cleanUtr,

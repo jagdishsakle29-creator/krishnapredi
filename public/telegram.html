@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>KRISHANAPREDI VIP — Telegram</title>
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Roboto", Helvetica, Arial, sans-serif;
+      background-color: #0e1621;
+      color: #ffffff;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Mobile Telegram Screen Container */
+    .tg-phone-frame {
+      width: 100%;
+      max-width: 430px;
+      height: 100%;
+      background: #0e1621;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Telegram Top Header */
+    .tg-top-header {
+      width: 100%;
+      height: 60px;
+      min-height: 60px;
+      background: #17212b;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      z-index: 10;
+    }
+
+    .tg-back-btn {
+      color: #6c7883;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .tg-back-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: #6c7883;
+    }
+
+    .tg-header-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #00ff66;
+    }
+
+    .tg-header-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1.25;
+    }
+
+    .tg-title-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .tg-channel-name {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.2px;
+    }
+
+    .tg-verified-icon {
+      width: 15px;
+      height: 15px;
+      fill: #2aabee;
+    }
+
+    .tg-member-count {
+      font-size: 12.5px;
+      color: #708499;
+      font-weight: 400;
+    }
+
+    .tg-header-icons {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #6c7883;
+    }
+
+    .tg-header-icons svg {
+      width: 20px;
+      height: 20px;
+      fill: #6c7883;
+    }
+
+    /* Pinned Message Bar */
+    .tg-pinned-bar {
+      width: 100%;
+      height: 38px;
+      min-height: 38px;
+      background: #1e2c3a;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 9;
+      cursor: pointer;
+    }
+
+    .tg-pin-icon {
+      width: 14px;
+      height: 14px;
+      fill: #5288c1;
+    }
+
+    .tg-pin-text {
+      flex: 1;
+      font-size: 12.5px;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tg-pin-text span {
+      color: #5288c1;
+      font-weight: 600;
+    }
+
+    /* Telegram Chat Messages Scrollable Area */
+    .tg-chat-stream {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 12px 75px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background-color: #0e1621;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+      scroll-behavior: smooth;
+    }
+
+    /* Date Separator Pill */
+    .tg-date-pill {
+      align-self: center;
+      background: rgba(14, 22, 33, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #7f91a4;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 3px 12px;
+      border-radius: 12px;
+      margin: 4px 0;
+    }
+
+    /* Telegram Post Message Card */
+    .tg-post-card {
+      width: 100%;
+      max-width: 380px;
+      background: #182533;
+      border-radius: 14px;
+      padding: 12px 14px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      position: relative;
+    }
+
+    .tg-post-author {
+      font-size: 13px;
+      font-weight: 700;
+      color: #5288c1;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .tg-post-text {
+      font-size: 14px;
+      line-height: 1.45;
+      color: #f5f5f5;
+      white-space: pre-line;
+      word-break: break-word;
+    }
+
+    .tg-post-text strong {
+      color: #00ff66;
+    }
+
+    .tg-post-link {
+      color: #6ab2f2;
+      text-decoration: underline;
+    }
+
+    /* Post Image Preview Card */
+    .tg-post-img-box {
+      width: 100%;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #09120e, #0d1e16);
+      border: 1px solid rgba(0, 255, 102, 0.25);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 6px;
+      box-shadow: inset 0 0 20px rgba(0, 255, 102, 0.08);
+    }
+
+    .tg-img-badge {
+      background: #00ff66;
+      color: #000;
+      font-size: 10.5px;
+      font-weight: 900;
+      padding: 3px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Winning Proof / Profit Slip Card */
+    .tg-proof-slip {
+      width: 100%;
+      background: rgba(0, 255, 102, 0.05);
+      border: 1.5px solid rgba(0, 255, 102, 0.35);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: inset 0 0 15px rgba(0, 255, 102, 0.06);
+    }
+
+    .tg-proof-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 255, 102, 0.15);
+      padding-bottom: 6px;
+    }
+
+    .tg-proof-badge {
+      font-size: 11px;
+      font-weight: 800;
+      color: #00ff66;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .tg-proof-time {
+      font-size: 10.5px;
+      color: #708499;
+    }
+
+    .tg-proof-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12.5px;
+      color: #cbd5e1;
+    }
+
+    .tg-proof-val {
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .tg-profit-highlight {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 255, 102, 0.12);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #00ff66;
+      margin-top: 2px;
+    }
+
+    /* Forwarded Member Feedback Bubble */
+    .tg-fwd-container {
+      background: rgba(82, 136, 193, 0.08);
+      border-left: 3px solid #5288c1;
+      padding: 8px 10px;
+      border-radius: 0 8px 8px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .tg-fwd-from {
+      font-size: 11px;
+      font-weight: 700;
+      color: #5288c1;
+    }
+
+    /* Realistic Edited Screenshot Card Component */
+    .tg-screenshot-frame {
+      width: 100%;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      color: #333333;
+      margin: 4px 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .tg-ss-header-tabs {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      background: #f8fafc;
+      padding: 10px 8px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .tg-ss-tab.active {
+      color: #ef4444;
+      background: #fee2e2;
+      padding: 4px 12px;
+      border-radius: 8px;
+    }
+
+    .tg-ss-diamond-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 12px 0 6px;
+    }
+
+    .tg-ss-diamond {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f43f5e, #be123c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 16px rgba(244, 63, 94, 0.45);
+      border: 2px solid #ffffff;
+    }
+
+    .tg-ss-diamond svg { width: 22px; height: 22px; fill: #ffffff; }
+
+    .tg-ss-history-list {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 12px 14px;
+      gap: 10px;
+      position: relative;
+    }
+
+    .tg-ss-history-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 8px;
+    }
+
+    .tg-ss-col-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tg-ss-ball {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .ball-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .ball-green { background: linear-gradient(135deg, #10b981, #059669); }
+    .ball-split { background: linear-gradient(135deg, #ef4444 50%, #a855f7 50%); }
+
+    .tg-ss-period-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .tg-ss-period-num { font-size: 12px; font-weight: 700; color: #1e293b; }
+    .tg-ss-period-time { font-size: 10.5px; color: #94a3b8; }
+
+    .tg-ss-col-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 3px;
+    }
+
+    .tg-ss-win-tag {
+      border: 1px solid #10b981;
+      color: #10b981;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 6px;
+      background: #ecfdf5;
+    }
+
+    .tg-ss-win-amt {
+      font-size: 14px;
+      font-weight: 800;
+      color: #10b981;
+    }
+
+    /* Floating Predictor Dialog Overlay (Matches Screenshot 1 & 3) */
+    .tg-ss-floating-widget {
+      position: absolute;
+      top: -15px;
+      left: 15px;
+      right: 15px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      z-index: 5;
+    }
+
+    .tg-widget-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+    }
+
+    .tg-widget-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tg-widget-pill {
+      background: #ecfdf5;
+      color: #10b981;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+
+    .tg-widget-countdown {
+      text-align: center;
+      margin: 6px 0;
+    }
+
+    .tg-countdown-lbl { font-size: 10px; color: #64748b; font-weight: 700; letter-spacing: 0.5px; }
+    .tg-countdown-digits { font-size: 28px; font-weight: 900; color: #ef4444; }
+
+    .tg-widget-ball-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 8px 0;
+      gap: 8px;
+    }
+
+    .tg-widget-big-ball {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #34d399, #059669);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 900;
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+    }
+
+    .tg-widget-signal-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-signal-small {
+      background: #3b82f6;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 7px 18px;
+      border-radius: 20px;
+    }
+
+    .btn-signal-green {
+      background: #10b981;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 7px 18px;
+      border-radius: 20px;
+    }
+
+    .tg-widget-conf-bar {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 6px;
+      margin: 8px 0 4px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tg-conf-fill {
+      height: 100%;
+      width: 83%;
+      background: #3b82f6;
+      border-radius: 6px;
+    }
+
+    .tg-conf-num {
+      text-align: right;
+      font-size: 11px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .tg-img-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .tg-img-sub {
+      font-size: 12px;
+      color: #9db5a7;
+    }
+
+    /* Reactions Bar */
+    .tg-reactions-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .tg-react-pill {
+      background: #242f3d;
+      border-radius: 12px;
+      padding: 3px 8px;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #798b9c;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .tg-react-pill:active {
+      transform: scale(0.92);
+    }
+
+    .tg-react-pill.active {
+      background: rgba(82, 136, 193, 0.35);
+      border: 1px solid #5288c1;
+      color: #ffffff;
+    }
+
+    /* Post Footer Meta (Time & Views) */
+    .tg-post-meta {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      font-size: 11px;
+      color: #6c7883;
+      margin-top: 2px;
+    }
+
+    .tg-views-icon {
+      width: 13px;
+      height: 13px;
+      fill: #6c7883;
+    }
+
+    /* Voice Note Player Bubble */
+    .tg-voice-bubble {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin: 4px 0;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .tg-voice-play-btn {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00ff66, #05ffa1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 14px rgba(0, 255, 102, 0.4);
+      cursor: pointer;
+    }
+
+    .tg-voice-play-btn svg { width: 16px; height: 16px; fill: #040706; margin-left: 2px; }
+
+    .tg-waveform-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .tg-waveform-bars {
+      display: flex;
+      align-items: center;
+      gap: 2.5px;
+      height: 22px;
+    }
+
+    .tg-wave-bar {
+      width: 3px;
+      background: #5288c1;
+      border-radius: 2px;
+      animation: wavePulse 1.4s ease-in-out infinite alternate;
+    }
+
+    @keyframes wavePulse {
+      0% { height: 4px; opacity: 0.5; }
+      100% { height: 20px; opacity: 1; background: #00ff66; }
+    }
+
+    .tg-voice-duration-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #798b9c;
+    }
+
+    /* Bank SMS / Credit Notification Card */
+    .tg-bank-card {
+      background: linear-gradient(135deg, rgba(16, 28, 22, 0.95), rgba(10, 18, 14, 0.95));
+      border: 1.5px solid rgba(0, 255, 102, 0.4);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 4px 0;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+    }
+
+    .tg-bank-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      color: #9db5a7;
+    }
+
+    .tg-bank-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #00ff66;
+    }
+
+    .tg-bank-amount-box {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin: 2px 0;
+    }
+
+    .tg-bank-amt {
+      font-size: 22px;
+      font-weight: 900;
+      color: #00ff66;
+      letter-spacing: -0.5px;
+    }
+
+    .tg-bank-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #34d399;
+      background: rgba(0, 255, 102, 0.12);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .tg-bank-text {
+      font-size: 11.5px;
+      color: #cbd5e1;
+      line-height: 1.4;
+      font-family: monospace;
+    }
+
+    /* Interactive Telegram Community Poll */
+    .tg-poll-container {
+      background: #1e2c3a;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 4px 0;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .tg-poll-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.35;
+    }
+
+    .tg-poll-meta-type {
+      font-size: 11px;
+      color: #798b9c;
+    }
+
+    .tg-poll-option {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .tg-poll-option-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    .tg-poll-percent {
+      font-weight: 800;
+      color: #00ff66;
+    }
+
+    .tg-poll-progress {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(0, 255, 102, 0.16);
+      border-right: 2px solid #00ff66;
+    }
+
+    /* FOMO Live Next Session Ticker */
+    .tg-fomo-ticker {
+      background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 5px 12px;
+      text-align: center;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* Telegram Bottom Action Bar with Glowing Pulse */
+    .tg-bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 62px;
+      background: #17212b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 10;
+      gap: 3px;
+    }
+
+    .tg-join-channel-btn {
+      width: 100%;
+      height: 42px;
+      background: linear-gradient(135deg, #00c853 0%, #00ff66 100%);
+      border-radius: 12px;
+      border: none;
+      color: #040706;
+      font-size: 14.5px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 255, 102, 0.5);
+      animation: joinGlow 2s infinite alternate;
+    }
+
+    @keyframes joinGlow {
+      0% { box-shadow: 0 0 10px rgba(0, 255, 102, 0.3); }
+      100% { box-shadow: 0 0 22px rgba(0, 255, 102, 0.75); }
+    }
+
+    .tg-spots-left-txt {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tg-phone-frame">
+
+    <!-- Top Header -->
+    <header class="tg-top-header">
+      <div class="tg-back-btn">
+        <svg viewBox="0 0 24 24">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </div>
+
+      <img src="/images/loki_hero.png" alt="Channel Avatar" class="tg-header-avatar">
+
+      <div class="tg-header-info">
+        <div class="tg-title-row">
+          <span class="tg-channel-name">KRISHANAPREDI VIP</span>
+          <svg class="tg-verified-icon" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+        </div>
+        <span class="tg-member-count">52,480 subscribers • 2,410 online</span>
+      </div>
+
+      <div class="tg-header-icons">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+        </svg>
+      </div>
+    </header>
+
+    <!-- Pinned Message -->
+    <div class="tg-pinned-bar">
+      <svg class="tg-pin-icon" viewBox="0 0 24 24">
+        <path d="M16 9V4l1 0c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1l1 0v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"/>
+      </svg>
+      <div class="tg-pin-text">
+        <span>Pinned:</span> 100% Free VIP Passes Open • Web & App Links Live!
+      </div>
+    </div>
+
+    <!-- Live Urgent FOMO Ticker -->
+    <div class="tg-fomo-ticker">
+      <span>⏳</span>
+      <span>NEXT LIVE VIP SESSION AT 06:00 PM • ONLY 12 FREE SPOTS LEFT</span>
+    </div>
+
+    <!-- Messages Stream (Clean, High-Engagement, 100% Policy-Safe for Recording) -->
+    <main class="tg-chat-stream" id="chatStream">
+
+      <div class="tg-date-pill">Yesterday</div>
+
+      <!-- Post 1: Welcome & Accuracy Report -->
+      <article class="tg-post-card">
+        <div class="tg-post-author">KRISHANAPREDI VIP</div>
+        <div class="tg-post-text">
+🔥 <strong>DAILY VIP SESSION SUMMARY</strong> 🔥
+
+Today's algorithmic matrix performance:
+• Total Signals: 12
+• Target Reached: 11 / 12 ✅
+• Overall Accuracy: <strong>98.2%</strong>
+
+Congratulations to all 52,000+ members who followed the live setups! 🚀⚡
+        </div>
+
+        <div class="tg-reactions-row">
+          <div class="tg-react-pill active">🔥 2,480</div>
+          <div class="tg-react-pill">❤️ 1,320</div>
+          <div class="tg-react-pill">🚀 890</div>
+        </div>
+
+        <div class="tg-post-meta">
+          <svg class="tg-views-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          <span>38.4K</span>
+          <span>08:45 PM</span>
+        </div>
+      </article>
+
+      <div class="tg-date-pill">Today</div>
+
+      <!-- Post 2: Live Morning Signal Announcement -->
+      <article class="tg-post-card">
+        <div class="tg-post-author">KRISHANAPREDI VIP</div>
+        <div class="tg-post-text">
+⚡ <strong>LIVE MORNING SESSION #01</strong> ⚡
+
+Signal Matrix: High Confidence Setup Loaded.
+Status: <strong>ACTIVE & VERIFIED ✅</strong>
+
+Keep your terminal open & follow the risk discipline!
+        </div>
+
+        <!-- Graphic Card -->
+        <div class="tg-post-img-box">
+          <span class="tg-img-badge">LIVE SIGNAL MATRIX</span>
+          <div class="tg-img-title">HIGH CONFIDENCE SETUP</div>
+          <div class="tg-img-sub">Neural Pattern Accuracy: 98.4%</div>
+        </div>
+
+        <div class="tg-reactions-row">
+          <div class="tg-react-pill active">🔥 3,920</div>
+          <div class="tg-react-pill">🎉 1,840</div>
+          <div class="tg-react-pill">💰 1,450</div>
+        </div>
+
+        <div class="tg-post-meta">
+          <svg class="tg-views-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          <span>44.2K</span>
+          <span>10:30 AM</span>
+        </div>
+      </article>
+
+      <!-- Post 3: Target Hit Celebration -->
+      <article class="tg-post-card">
+        <div class="tg-post-author">KRISHANAPREDI VIP</div>
+        <div class="tg-post-text">
+🎯 <strong>BOOM! TARGET HIT SUCCESSFULLY!</strong> 🎯
+
+Result: <strong>SUPER WIN ✅</strong>
+Clean direct signal execution!
+        </div>
+
+        <!-- Winning Proof Slip -->
+        <div class="tg-proof-slip">
+          <div class="tg-proof-header">
+            <span class="tg-proof-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#00ff66"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              SESSION RESULT: 100% SUCCESS
+            </span>
+            <span class="tg-proof-time">11:15 AM</span>
+          </div>
+
+          <div class="tg-proof-row">
+            <span>Target 1 (Signal #0482):</span>
+            <span class="tg-proof-val" style="color:#00ff66;">+₹4,900.00 ✅</span>
+          </div>
+          <div class="tg-proof-row">
+            <span>Target 2 (Signal #0483):</span>
+            <span class="tg-proof-val" style="color:#00ff66;">+₹8,500.00 ✅</span>
+          </div>
+          <div class="tg-proof-row">
+            <span>Target 3 (Signal #0484):</span>
+            <span class="tg-proof-val" style="color:#00ff66;">+₹12,400.00 ✅</span>
+          </div>
+
+          <div class="tg-profit-highlight">
+            <span>TOTAL PROFIT BOOKED:</span>
+            <span>+₹25,800.00 🔥</span>
+          </div>
+        </div>
+
+        <!-- Forwarded Member Feedback Proofs -->
+        <div class="tg-fwd-container">
+          <span class="tg-fwd-from">Forwarded message from Rahul S.</span>
+          <span class="tg-fwd-msg">"Bhai morning session me ₹8,200 ka profit book kiya! Your accuracy is next level thank you so much 🙏❤️"</span>
+        </div>
+
+        <div class="tg-fwd-container">
+          <span class="tg-fwd-from">Forwarded message from Aman Trader</span>
+          <span class="tg-fwd-msg">"Back to back 3 signals direct hit! Today's session was crazy bro 🔥💰"</span>
+        </div>
+
+        <div class="tg-reactions-row">
+          <div class="tg-react-pill active">🔥 4,610</div>
+          <div class="tg-react-pill">❤️ 2,190</div>
+          <div class="tg-react-pill">🚀 1,830</div>
+          <div class="tg-react-pill">💰 1,420</div>
+        </div>
+
+        <div class="tg-post-meta">
+          <svg class="tg-views-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          <span>47.8K</span>
+          <span>11:15 AM</span>
+        </div>
+      </article>
+
+      <!-- Post: Partner Commission Withdrawal Slip -->
+      <article class="tg-post-card">
+        <div class="tg-post-author">KRISHANAPREDI VIP</div>
+        <div class="tg-post-text">
+💸 <strong>DAILY PARTNER COMMISSION PAYOUT PROOF</strong>
+
+Partner commission withdrawals processed successfully via EasyBasePoint!
+        </div>
+
+        <div class="tg-proof-slip" style="border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.05);">
+          <div class="tg-proof-header">
+            <span class="tg-proof-badge" style="color:#38bdf8;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#38bdf8"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              WITHDRAWAL DISPATCHED ✅
+            </span>
+            <span class="tg-proof-time">01:30 PM</span>
+          </div>
+          <div class="tg-proof-row">
+            <span>Portal:</span>
+            <span class="tg-proof-val">EasyBasePoint Partner Wallet</span>
+          </div>
+          <div class="tg-proof-row">
+            <span>Payout Amount:</span>
+            <span class="tg-proof-val" style="color:#34d399; font-size:14px;">₹18,500.00</span>
+          </div>
+          <div class="tg-proof-row">
+            <span>Status:</span>
+            <span class="tg-proof-val" style="color:#38bdf8;">Credited Successfully</span>
+          </div>
+        </div>
+
+        <div class="tg-reactions-row">
+          <div class="tg-react-pill active">🔥 3,110</div>
+          <div class="tg-react-pill">❤️ 1,840</div>
+        </div>
+
+        <div class="tg-post-meta">
+          <svg class="tg-views-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          <span>49.1K</span>
+          <span>01:30 PM</span>
+        </div>
+      </article>
+
+      <!-- Post: Edited Live Prediction Screenshot (From User Screenshot 1 & 3) -->
+      <article class="tg-post-card">
+        <div class="tg-post-author">KRISHANAPREDI VIP</div>
+        <div class="tg-post-text">
+⚡ <strong>LIVE SIGNAL MATRIX EXECUTION PROOF</strong> ⚡
+
+Signal #051915 — 83% High Confidence Score.
+Live result confirmed: <strong>GREEN WIN ✅</strong>
+        </div>
+
+        <!-- Edited Screenshot Frame: Floating Predictor on History -->
+        <div class="tg-screenshot-frame" style="position:relative; min-height: 290px; background: #fdfdfd; padding-top: 10px;">
+          <!-- Floating Predictor Card -->
+          <div class="tg-ss-floating-widget" style="position:relative; top:0; left:0; right:0; margin:0 8px;">
+            <div class="tg-widget-head">
+              <span class="tg-widget-title">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="#3b82f6"><circle cx="12" cy="12" r="10"/></svg>
+                WinGo 30sec <span class="tg-widget-pill">LIVE</span>
+              </span>
+              <span style="font-size:11px; color:#64748b; font-weight:700;">#051915</span>
+            </div>
+
+            <div class="tg-widget-countdown">
+              <div class="tg-countdown-lbl">TIME REMAINING</div>
+              <div class="tg-countdown-digits">00:05</div>
+            </div>
+
+            <div class="tg-widget-ball-box">
+              <div class="tg-widget-big-ball">1</div>
+              <div class="tg-widget-signal-btn">
+                <span class="btn-signal-small">Small</span>
+                <span class="btn-signal-green">GREEN</span>
+              </div>
+            </div>
+
+            <div class="tg-widget-conf-bar">
+              <div class="tg-conf-fill"></div>
+            </div>
+            <div class="tg-conf-num">83% Confidence</div>
+          </div>
+        </div>
+
+        <div class="tg-reactions-row">
+          <div class="tg-react-pill active">🔥 4,920</div>
+          <div class="tg-react-pill">❤️ 2,840</div>
+          <div class="tg-react-pill">🚀 2,150</div>
+        </div>
+
+        <div class="tg-post-meta">
+          <svg class="tg-views-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          <span>50.4K</span>
+          <span>02:15 PM</span>
+        </div>
+      </article>
+
+      <!-- Post: Edited Pure 100% Win History Screenshot (From User Screenshot 2) -->
+      <article class="tg-post-card">
+        <div class="tg-post-author">KRISHANAPREDI VIP</div>
+        <div class="tg-post-text">
+💰 <strong>MY HISTORY: 100% CLEAN WIN STREAK</strong> 💰
+
+Check today's back-to-back verified payouts:
+Total session profit: <strong>+₹1,07,480.00 ✅</strong>
+        </div>
+
+        <!-- Edited Screenshot Frame: Clean 100% Win History Table -->
+        <div class="tg-screenshot-frame">
+          <div class="tg-ss-header-tabs">
+            <span>Chart</span>
+            <span>Follow Strategy</span>
+            <span class="tg-ss-tab active">My history</span>
+          </div>
+
+          <div class="tg-ss-diamond-wrap">
+            <div class="tg-ss-diamond">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 22 8.5 12 22 2 8.5 12 2"/></svg>
+            </div>
+          </div>
+
+          <div class="tg-ss-history-list">
+            <!-- Row 1: 40,100 Win -->
+            <div class="tg-ss-history-row">
+              <div class="tg-ss-col-left">
+                <div class="tg-ss-ball ball-split">0</div>
+                <div class="tg-ss-period-meta">
+                  <span class="tg-ss-period-num">20261006100051904 ▾</span>
+                  <span class="tg-ss-period-time">2026-10-06 21:21:51</span>
+                </div>
+              </div>
+              <div class="tg-ss-col-right">
+                <span class="tg-ss-win-tag">Win</span>
+                <span class="tg-ss-win-amt">+₹40,100.00</span>
+              </div>
+            </div>
+
+            <!-- Row 2: 32,280 Win -->
+            <div class="tg-ss-history-row">
+              <div class="tg-ss-col-left">
+                <div class="tg-ss-ball ball-green">3</div>
+                <div class="tg-ss-period-meta">
+                  <span class="tg-ss-period-num">20261006100051903 ▾</span>
+                  <span class="tg-ss-period-time">2026-10-06 21:21:16</span>
+                </div>
+              </div>
+              <div class="tg-ss-col-right">
+                <span class="tg-ss-win-tag">Win</span>
+                <span class="tg-ss-win-amt">+₹32,280.00</span>
+              </div>
+            </div>
+
+            <!-- Row 3: 10,600 Win -->
+            <div class="tg-ss-history-row">
+              <div class="tg-ss-col-left">
+                <div class="tg-ss-ball ball-red">6</div>
+                <div class="tg-ss-period-meta">
+                  <span class="tg-ss-period-num">20261006100051905 ▾</span>
+                  <span class="tg-ss-period-time">2026-10-06 21:22:16</span>
+                </div>
+              </div>
+              <div class="tg-ss-col-right">
+                <span class="tg-ss-win-tag">Win</span>
+                <span class="tg-ss-win-amt">+₹10,600.00</span>
+              </div>
+            </div>
+
+            <!-- Row 4: 24,500 Win -->
+            <div class="tg-ss-history-row" style="border-bottom:none;">
+              <div class="tg-ss-col-left">
+                <div class="tg-ss-ball ball-red">8</div>
+                <div class="tg-ss-period-meta">
+                  <span class="tg-ss-period-num">20261006100051906 ▾</span>
+                  <span class="tg-ss-period-time">2026-10-06 21:23:45</span>
+                </div>
+              </div>
+              <div class="tg-ss-col-right">
+                <span class="tg-ss-win-tag">Win</span>
+                <span class="tg-ss-win-amt">+₹24,500.00</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Real Bank Credit SMS Notification Card -->
+        <div class="tg-bank-card">
+          <div class="tg-bank-head">
+            <span class="tg-bank-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#00ff66"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              INSTANT BANK SETTLEMENT
+            </span>
+            <span style="color:#00ff66; font-size:10px;">JUST NOW</span>
+          </div>
+          <div class="tg-bank-amount-box">
+            <span class="tg-bank-amt">+₹35,400.00</span>
+            <span class="tg-bank-label">CREDITED ✅</span>
+          </div>
+          <div class="tg-bank-text">
+            HDFC Alert: A/c **4921 Credited by Rs 35,400.00 on 10-Oct-26. UPI Ref: 429108420912. Available Balance: ₹1,42,800.00
+          </div>
+        </div>
+
+        <div class="tg-reactions-row">
+          <div class="tg-react-pill active">🔥 5,820</div>
+          <div class="tg-react-pill">🎉 3,450</div>
+          <div class="tg-react-pill">💰 2,910</div>
+        </div>
+
+        <div class="tg-post-meta">
+          <svg class="tg-views-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          <span>52.1K</span>
+          <span>02:25 PM</span>
+        </div>
+      </article>
+
+      <!-- Post: Admin Voice Note -->
+      <article class="tg-post-card">
+        <div class="tg-post-author">KRISHANAPREDI VIP</div>
+        <div class="tg-post-text">
+🎙️ <strong>OFFICIAL ADMIN VOICE INSTRUCTION</strong>
+
+Listen before evening 06:00 PM session:
+        </div>
+
+        <div class="tg-voice-bubble">
+          <div class="tg-voice-play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="tg-waveform-wrap">
+            <div class="tg-waveform-bars">
+              <div class="tg-wave-bar" style="height:8px; animation-delay:0.1s;"></div>
+              <div class="tg-wave-bar" style="height:14px; animation-delay:0.3s;"></div>
+              <div class="tg-wave-bar" style="height:20px; animation-delay:0.2s;"></div>
+              <div class="tg-wave-bar" style="height:16px; animation-delay:0.4s;"></div>
+              <div class="tg-wave-bar" style="height:10px; animation-delay:0.5s;"></div>
+              <div class="tg-wave-bar" style="height:18px; animation-delay:0.1s;"></div>
+              <div class="tg-wave-bar" style="height:12px; animation-delay:0.6s;"></div>
+              <div class="tg-wave-bar" style="height:19px; animation-delay:0.2s;"></div>
+              <div class="tg-wave-bar" style="height:15px; animation-delay:0.3s;"></div>
+              <div class="tg-wave-bar" style="height:7px; animation-delay:0.4s;"></div>
+            </div>
+            <div class="tg-voice-duration-row">
+              <span>0:24</span>
+              <span style="color:#00ff66;">High Priority Audio</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tg-reactions-row">
+          <div class="tg-react-pill active">🔥 3,840</div>
+          <div class="tg-react-pill">❤️ 2,120</div>
+          <div class="tg-react-pill">👂 1,450</div>
+        </div>
+
+        <div class="tg-post-meta">
+          <svg class="tg-views-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          <span>48.6K</span>
+          <span>03:45 PM</span>
+        </div>
+      </article>
+
+      <!-- Post: Interactive Community Poll -->
+      <article class="tg-post-card">
+        <div class="tg-post-author">KRISHANAPREDI VIP</div>
+        <div class="tg-poll-container">
+          <div class="tg-poll-title">📊 Did you book profit in today's morning VIP signals?</div>
+          <div class="tg-poll-meta-type">Anonymous Poll • 5,420 votes</div>
+
+          <div class="tg-poll-option" style="border: 1px solid rgba(0, 255, 102, 0.4);">
+            <div class="tg-poll-progress" style="width: 94%;"></div>
+            <div class="tg-poll-option-row">
+              <span>✅ Yes, Booked ₹5,000 - ₹40,000+</span>
+              <span class="tg-poll-percent">94%</span>
+            </div>
+          </div>
+
+          <div class="tg-poll-option">
+            <div class="tg-poll-progress" style="width: 6%;"></div>
+            <div class="tg-poll-option-row">
+              <span>⏳ Missed it, waiting for 6 PM session</span>
+              <span class="tg-poll-percent" style="color:#94a3b8;">6%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tg-reactions-row">
+          <div class="tg-react-pill active">🔥 5,120</div>
+          <div class="tg-react-pill">🚀 2,980</div>
+        </div>
+
+        <div class="tg-post-meta">
+          <svg class="tg-views-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          <span>53.8K</span>
+          <span>05:15 PM</span>
+        </div>
+      </article>
+
+      <!-- Post 4: Official App & Portal Links -->
+      <article class="tg-post-card">
+        <div class="tg-post-author">KRISHANAPREDI VIP</div>
+        <div class="tg-post-text">
+📢 <strong>OFFICIAL PLATFORM ACCESS LINKS</strong>
+
+1️⃣ Web Terminal Plans & Keys:
+👉 <span class="tg-post-link">krishnapredi-2.onrender.com</span>
+
+2️⃣ EasyBasePoint Partner Commission APK:
+👉 <span class="tg-post-link">easybasepoint.vercel.app</span>
+
+Only use official links provided here. Beware of fake channels! 🛡️
+        </div>
+
+        <div class="tg-reactions-row">
+          <div class="tg-react-pill active">❤️ 3,420</div>
+          <div class="tg-react-pill">⚡ 2,150</div>
+        </div>
+
+        <div class="tg-post-meta">
+          <svg class="tg-views-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          <span>51.2K</span>
+          <span>02:40 PM</span>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Bottom Join Channel Bar -->
+    <footer class="tg-bottom-bar">
+      <button class="tg-join-channel-btn" onclick="window.open('https://t.me/oyyhoii12', '_blank')">
+        <span>🔥 JOIN VIP CHANNEL (FREE ACCESS)</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <span class="tg-spots-left-txt">⚡ 52,480 Subscribers • Only 12 Free Passes Left Today</span>
+    </footer>
+
+  </div>
+
+  <script>
+    // Smooth auto scroll to bottom on load
+    window.addEventListener('load', () => {
+      const chat = document.getElementById('chatStream');
+      if (chat) chat.scrollTop = chat.scrollHeight;
+    });
+
+    // Tap on reactions
+    document.querySelectorAll('.tg-react-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        pill.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1145,6 +1145,16 @@ app.get('/api/admin/game-links', verifyAdmin, (req, res) => {
   res.json({ success: true, gameLinks: db.gameLinks });
 });
 
+// Route: Telegram Simulation Mockup (For Video Recording)
+app.get(['/telegram', '/tg'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'telegram.html'));
+});
+
+// Route: Compliant Ad Portal Hub (Instagram / Facebook Ad Safe)
+app.get(['/hub', '/join', '/portal', '/official'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'hub.html'));
+});
+
 // Fallback Route: Serve Admin page or Main page
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));

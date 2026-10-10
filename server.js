@@ -1150,9 +1150,14 @@ app.get(['/telegram', '/tg'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'telegram.html'));
 });
 
+// Route: Terminal App (Login / Register / Key Activation Console)
+app.get(['/app', '/terminal', '/login'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'app.html'));
+});
+
 // Route: Compliant Ad Portal Hub (Instagram / Facebook Ad Safe)
-app.get(['/hub', '/join', '/portal', '/official'], (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'hub.html'));
+app.get(['/', '/hub', '/join', '/portal', '/official'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Fallback Route: Serve Admin page or Main page

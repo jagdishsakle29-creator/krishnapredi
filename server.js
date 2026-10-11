@@ -179,64 +179,64 @@ const PLANS = [
     id: 'plan_1678',
     name: 'PLAN 1 — STARTER',
     price: 1678,
-    durationDays: 3,
+    durationDays: 2,
     dailyPredictions: 9,
-    performance: '85–88% Platform AI Prediction Accuracy',
+    performance: '100% Platform AI Prediction Accuracy',
     badge: 'Popular',
     benefits: [
-      '3 Days Full Access',
+      '2 Days Full Access',
       '9 Daily Predictions',
       'Multi-Game Algorithms',
       'Instant Key Activation',
-      'Direct Platform AI Signals'
+      '100% Accuracy AI Signals'
     ]
   },
   {
     id: 'plan_2189',
     name: 'PLAN 2 — PRO ADVANCED',
     price: 2189,
-    durationDays: 7,
+    durationDays: 4,
     dailyPredictions: 21,
-    performance: '90% Platform AI Prediction Accuracy',
+    performance: '100% Platform AI Prediction Accuracy',
     badge: 'High Value',
     benefits: [
-      '7 Days Extended Access',
+      '4 Days Extended Access',
       '21 Daily Predictions',
       'Real-Time Signal Engine',
       'Deep Pattern Recognition',
-      'Dedicated Server-Side Key'
+      '100% Accuracy Guaranteed'
     ]
   },
   {
     id: 'plan_2600',
     name: 'PLAN 3 — ULTRA MATRIX',
     price: 2600,
-    durationDays: 15,
+    durationDays: 9,
     dailyPredictions: 32,
-    performance: '97% Platform AI Prediction Accuracy',
+    performance: '100% Platform AI Prediction Accuracy',
     badge: 'Elite Tier',
     benefits: [
-      '15 Days Continuous Access',
+      '9 Days Continuous Access',
       '32 Daily Predictions',
       'Multi-Odds Safety Analysis',
       'Automated Game Link Sync',
-      'Priority Signal Queuing'
+      '100% Accuracy AI Signals'
     ]
   },
   {
     id: 'plan_3366',
     name: 'PLAN 4 — LOKI SUPREME',
     price: 3366,
-    durationDays: 25,
+    durationDays: 12,
     dailyPredictions: 50,
-    performance: 'Premium High-Altitude Flight Matrix & Vector Analysis',
+    performance: '100% Master Protocol & High-Altitude Vector Accuracy',
     badge: 'Master Protocol',
     benefits: [
-      '25 Days Master License',
+      '12 Days Master License',
       '50 Daily Predictions',
       'Maximum Signal Multiplier Engine',
       'Full Game Matrix Coverage',
-      'Dedicated VIP Channel Updates'
+      '100% Accuracy VIP Updates'
     ]
   }
 ];
@@ -288,7 +288,7 @@ app.get('/api/payment/qr', async (req, res) => {
       amount,
       upiUrl,
       qrDataUrl,
-      uploadedQrUrl: '/images/baby_qr.png'
+      uploadedQrUrl: '/images/qr_uploaded.png'
     });
   } catch (err) {
     console.error('QR Generation error:', err);

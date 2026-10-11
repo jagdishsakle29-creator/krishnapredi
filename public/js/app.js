@@ -357,7 +357,7 @@
         
         // Single Pure Dynamic QR
         const qrImg = document.getElementById('qrDisplayImg');
-        if (qrImg) qrImg.src = data.uploadedQrUrl || data.qrDataUrl;
+        if (qrImg) qrImg.src = data.uploadedQrUrl ? `${data.uploadedQrUrl}?v=${Date.now()}` : data.qrDataUrl;
 
         // Configure Deep Links for Mobile Apps
         setupUpiAppLinks(data.amount);
@@ -456,7 +456,7 @@
       const data = await res.json();
       if (data.success) {
         const qrImg = document.getElementById('walletQrImg');
-        if (qrImg) qrImg.src = data.uploadedQrUrl || data.qrDataUrl;
+        if (qrImg) qrImg.src = data.uploadedQrUrl ? `${data.uploadedQrUrl}?v=${Date.now()}` : data.qrDataUrl;
         const qrAmt = document.getElementById('walletQrAmtDisplay');
         if (qrAmt) qrAmt.textContent = `₹${Number(amt).toLocaleString('en-IN')}`;
       }

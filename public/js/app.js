@@ -357,7 +357,7 @@
         
         // Single Pure Dynamic QR
         const qrImg = document.getElementById('qrDisplayImg');
-        if (qrImg) qrImg.src = data.qrDataUrl;
+        if (qrImg) qrImg.src = data.uploadedQrUrl || data.qrDataUrl;
 
         // Configure Deep Links for Mobile Apps
         setupUpiAppLinks(data.amount);
@@ -369,8 +369,8 @@
 
   // Helper: Build precise Android Intent, iOS Scheme, and Universal UPI links
   function buildUpiUrls(amount, note) {
-    const upiId = 'antaryami12@upi';
-    const payeeName = 'KrishanaPredi';
+    const upiId = 'narwariya321@axl';
+    const payeeName = 'Khushi Naravriya';
     const amt = String(amount || 300);
     const tn = note || 'KrishanaPredi';
 
@@ -456,7 +456,7 @@
       const data = await res.json();
       if (data.success) {
         const qrImg = document.getElementById('walletQrImg');
-        if (qrImg) qrImg.src = data.qrDataUrl;
+        if (qrImg) qrImg.src = data.uploadedQrUrl || data.qrDataUrl;
         const qrAmt = document.getElementById('walletQrAmtDisplay');
         if (qrAmt) qrAmt.textContent = `₹${Number(amt).toLocaleString('en-IN')}`;
       }
@@ -819,7 +819,7 @@
 
     // Copy Wallet UPI ID
     document.getElementById('copyWalletUpiBtn')?.addEventListener('click', () => {
-      const upiText = 'antaryami12@upi';
+      const upiText = 'narwariya321@axl';
       navigator.clipboard.writeText(upiText).then(() => {
         showToast('UPI ID copied: ' + upiText, 'success');
       }).catch(() => showToast('Copied: ' + upiText));
@@ -1042,7 +1042,7 @@
 
     // Copy UPI ID
     document.getElementById('copyUpiBtn')?.addEventListener('click', () => {
-      const upiText = document.getElementById('upiIdText')?.textContent || 'antaryami12@upi';
+      const upiText = document.getElementById('upiIdText')?.textContent || 'narwariya321@axl';
       navigator.clipboard.writeText(upiText).then(() => {
         showToast('UPI ID copied to clipboard: ' + upiText, 'success');
       }).catch(() => {

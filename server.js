@@ -268,8 +268,9 @@ app.get('/api/plans', (req, res) => {
 app.get('/api/payment/qr', async (req, res) => {
   try {
     const amount = req.query.amount || '1678';
-    const upiId = 'antaryami12@upi';
-    const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent('KrishanaPredi')}&am=${encodeURIComponent(amount)}&cu=INR&tn=${encodeURIComponent('KrishanaPredi Plan Purchase')}`;
+    const upiId = 'narwariya321@axl';
+    const payeeName = 'Khushi Naravriya';
+    const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${encodeURIComponent(amount)}&cu=INR&tn=${encodeURIComponent('KrishanaPredi Plan Purchase')}`;
 
     const qrDataUrl = await QRCode.toDataURL(upiUrl, {
       errorCorrectionLevel: 'M',
@@ -287,7 +288,7 @@ app.get('/api/payment/qr', async (req, res) => {
       amount,
       upiUrl,
       qrDataUrl,
-      uploadedQrUrl: '/images/qr_uploaded.png'
+      uploadedQrUrl: '/images/baby_qr.png'
     });
   } catch (err) {
     console.error('QR Generation error:', err);
